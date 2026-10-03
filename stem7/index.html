@@ -1,0 +1,643 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STEM 7 — iPad / Web</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#142033;--muted:#667085;--line:#dfe5ee;--blue:#3156d3;--green:#16815d;--red:#b53b43;--amber:#a56c0a;--violet:#7655c5}*{box-sizing:border-box}body{margin:0;font:16px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}header{position:sticky;top:0;z-index:9;background:#ffffffee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 18px}.head{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand b{font-size:20px}.small{font-size:13px;color:var(--muted)}main{max-width:1180px;margin:auto;padding:18px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 30px #18243a0a}.span12{grid-column:span 12}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#edf1ff;color:#3048a8;font-size:12px;font-weight:800}.bar{height:9px;background:#e9edf3;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--blue);transition:.3s}.btn,button{border:0;border-radius:12px;padding:10px 13px;font-weight:750;cursor:pointer;background:var(--blue);color:#fff}.secondary{background:#edf1f6!important;color:#29354d!important}.ghost{background:#fff!important;color:#29354d!important;border:1px solid var(--line)!important}.danger{background:#fff0f0!important;color:#9a3038!important}.subject-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.subject{padding:15px;border:1px solid var(--line);border-radius:16px}.course{display:grid;grid-template-columns:290px 1fr;gap:16px}.sidebar{position:sticky;top:88px;height:calc(100vh - 110px);overflow:auto}.module-btn{display:block;width:100%;text-align:left;margin:6px 0;background:#fff;color:var(--ink);border:1px solid var(--line)}.module-btn.active{background:#172033;color:#fff}.lesson{display:none}.lesson.active{display:block}.hero{background:linear-gradient(135deg,#eef3ff,#f9fbff);border:1px solid #dce4fb;border-radius:18px;padding:18px}.visual{margin:16px 0;border:1px solid var(--line);background:#fbfcff;border-radius:18px;padding:12px;overflow:hidden}.visual svg{display:block;width:100%;height:auto;max-height:390px}.caption{font-size:13px;color:var(--muted);margin-top:8px}.concept{padding:12px 14px;border-left:4px solid var(--blue);background:#f3f6ff;border-radius:10px;margin:12px 0}.q{border:1px solid var(--line);border-radius:16px;padding:15px;margin:13px 0}.q input{width:min(180px,100%);padding:10px;border:1px solid #c8d0dc;border-radius:10px;font-size:16px}.feedback,.review{display:none;margin-top:10px;padding:11px;border-radius:10px}.feedback.ok{display:block;background:#eaf8f2;color:#126443}.feedback.bad{display:block;background:#fff0f0;color:#8d2929}.review{background:#fff8e7;color:#76500c}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.map{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mapcol{border:1px solid var(--line);border-radius:16px;padding:13px}.node{padding:9px;margin:7px 0;background:#f7f9fc;border-radius:10px;font-size:14px}.node.done{background:#eaf8f2}.node.weak{background:#fff4e3}.parent{display:none}.parent.show{display:block}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{background:#f7f9fc;border-radius:14px;padding:13px}.stat b{display:block;font-size:24px}.mastery-row{display:grid;grid-template-columns:1.4fr 2fr 60px;gap:10px;align-items:center;margin:9px 0}.toc-tag{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.formula{font-size:22px;font-weight:800;text-align:center;padding:12px}.hidden{display:none!important}.repeatbox{border:1px dashed #e0b45e;background:#fffaf0;border-radius:14px;padding:13px;margin-top:10px}.streak{font-weight:800;color:var(--amber)}@media(max-width:850px){.span8,.span4,.span6{grid-column:span 12}.subject-grid,.map,.stats{grid-template-columns:1fr}.course{grid-template-columns:1fr}.sidebar{position:static;height:auto}.sidebar .module-list{display:flex;overflow:auto;gap:6px}.module-btn{min-width:220px}.head{align-items:flex-start}.mastery-row{grid-template-columns:1fr}.visual svg{max-height:300px}}
+
+.progress-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#eef7f3;color:#126443;font-size:12px;font-weight:800}.practice-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.review-panel{display:none;margin:14px 0;padding:16px;border:1px solid #e5c778;background:#fffaf0;border-radius:16px}.review-panel.show{display:block}.review-panel h3{margin-top:0}.mini-check{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-top:10px}.mini-check input{padding:10px;border:1px solid #c8d0dc;border-radius:10px;font-size:16px;min-width:0}.step-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.step-strip div{padding:9px;border-radius:12px;background:#f7f9fc;text-align:center;font-size:12px;font-weight:750}.step-strip .now{background:#eaf0ff;color:#3048a8}.challenge{border:1px solid #d9d0f4;background:#faf8ff;border-radius:16px;padding:14px;margin-top:14px}.lesson-nav{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}.badge-error{display:inline-block;padding:3px 7px;border-radius:8px;background:#fff0f0;color:#8d2929;font-size:11px;font-weight:800;margin-bottom:6px}.answer-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.answer-row input{flex:1;min-width:130px}.minus-btn{font-size:24px;line-height:1;padding:8px 16px}.topic-complete{margin-top:10px;padding:12px;border-radius:12px;background:#eaf8f2;color:#126443;font-weight:800}@media(max-width:600px){.step-strip{grid-template-columns:repeat(2,1fr)}.practice-head{align-items:flex-start;flex-direction:column}}
+
+.review-queue{display:grid;gap:9px;margin-top:10px}.review-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:13px;background:#fff}.review-item.due{border-color:#e2bd63;background:#fffaf0}.review-item strong{display:block}.microgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.microcard{padding:11px;border-radius:12px;background:#f7f9fc;border:1px solid var(--line);font-size:13px}.microcard b{display:block;margin-bottom:4px}.session-note{padding:10px 12px;border-radius:12px;background:#eef7f3;color:#126443;margin:10px 0}.locked-answer{font-size:12px;color:var(--muted);margin-top:8px}.answer-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.answer-row input{flex:1;min-width:130px}.minus-btn{font-size:24px;line-height:1;padding:8px 16px}.topic-complete{margin-top:10px;padding:12px;border-radius:12px;background:#eaf8f2;color:#126443;font-weight:800}@media(max-width:600px){.review-item{grid-template-columns:1fr}.microgrid{grid-template-columns:1fr}}
+
+.task-explain{margin:18px 0;padding:18px;border:1px solid #d7e4ff;border-radius:18px;background:linear-gradient(180deg,#f8fbff,#f3f7ff)}
+.task-explain p{line-height:1.6}.task-explain .concept{margin-top:10px}
+</style>
+<style>
+.path-phase{margin:18px 0;padding:16px;border:1px solid #dce3f0;border-radius:18px;background:#fff}
+.path-phase h3{margin:0 0 5px}
+.path-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:12px}
+.path-node{padding:13px;border:1px solid #d9dfeb;border-radius:14px;background:#f9fbff}
+.path-node.done{border-color:#72b99e;background:#f1fbf7}
+.path-node.locked{opacity:.62;background:#f5f5f5}
+.path-node.current{border:2px solid #3156d3;background:#f2f5ff}
+.path-node .tag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.path-node button{margin-top:9px;width:100%}
+.today-card{padding:16px;border:1px solid #dce3f0;border-radius:16px;background:#fff;margin:10px 0}
+.gate{font-size:13px;margin-top:7px;color:#667085}
+@media(max-width:600px){.path-grid{grid-template-columns:1fr}}
+</style>
+
+<style>
+.mastery-box{margin:12px 0;padding:12px 14px;border:1px solid #dce3f0;border-radius:14px;background:#fbfcff}
+.mastery-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.mastery-chip{font-size:12px;padding:5px 8px;border-radius:999px;background:#eef2f8}
+.mastery-chip.ok{background:#e8f7ef}
+.mastery-chip.warn{background:#fff3df}
+</style>
+
+<style>
+.reset-progress-panel{
+  margin:28px 0 10px;padding:18px;border:2px solid #b94a52;border-radius:18px;
+  background:#fff7f7;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap
+}
+.reset-progress-btn{
+  background:#9f2933!important;color:#fff!important;border:0!important;
+  padding:13px 18px!important;border-radius:12px!important;font-weight:800!important;
+  font-size:15px!important;min-height:48px
+}
+@media(max-width:600px){.reset-progress-panel{display:block}.reset-progress-btn{width:100%;margin-top:12px}}
+</style>
+
+<style>
+.header-reset{
+  background:#c62828!important;color:#fff!important;border:1px solid #9f1f1f!important;
+  border-radius:9px!important;padding:8px 11px!important;min-height:36px!important;
+  font-size:13px!important;font-weight:700!important;white-space:nowrap!important;
+  box-shadow:none!important
+}
+.header-reset:active{transform:translateY(1px)}
+@media(max-width:600px){
+  header .actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .header-reset{font-size:12px!important;padding:7px 9px!important;min-height:34px!important}
+}
+</style>
+</head><body><header><div class="head"><div class="brand"><b>STEM 7</b><div class="small">Алгебра × Геометрія × Фізика · персональний навчальний маршрут</div></div><div class="actions"><button class="secondary" onclick="showHome()">Головна</button><button class="secondary" onclick="toggleParent()">Батьківський режим</button><button class="header-reset" onclick="resetProgress()">↺ Скинути прогрес</button></div></div></header><main>
+<section id="home"><div class="grid"><div class="card span8"><span class="pill">ПРОДОВЖИТИ</span><h2 id="continueName">Почнімо навчання</h2><div class="bar"><i id="overallBar" style="width:0%"></i></div><p class="small" id="overallText"></p><button onclick="continueLearning()">Продовжити</button></div><div class="card span4"><span class="pill">СЬОГОДНІ</span><h3>Розумне повторення</h3><p id="reviewCount">Немає тем для повторення.</p><div id="reviewQueue" class="review-queue"></div><div class="actions"><button class="ghost" onclick="startReviewSession()">Почати повторення</button><button class="ghost" onclick="openWeakest()">Слабке місце</button></div></div><div class="card span12"><h2>Три предмети — одна система</h2><div class="subject-grid"><div class="subject"><b>Алгебра</b><p class="small">Поглиблений курс: вирази, степені, одночлени, многочлени, множення й розкладання, рівняння, функції, графіки та системи рівнянь.</p><div class="bar"><i id="algBar"></i></div><p id="algPct"></p><button class="ghost" onclick="openFirst('alg')">Вчитися</button></div><div class="subject"><b>Геометрія</b><p class="small">Поглиблений курс: кути, паралельні прямі, трикутники, ознаки рівності, коло та геометричні побудови — з окремим поясненням кожного типу задачі.</p><div class="bar"><i id="geoBar"></i></div><p id="geoPct"></p><button class="ghost" onclick="openFirst('geo')">Вчитися</button></div><div class="subject"><b>Фізика</b><p class="small">Поглиблений курс: вимірювання, рух, графіки, сили, густина, тиск, робота й потужність — по 6 різних типів задач із власним поясненням.</p><div class="bar"><i id="phyBar"></i></div><p id="phyPct"></p><button class="ghost" onclick="openFirst('phy')">Вчитися</button></div></div></div><div class="card span12"><span class="pill">КАРТА РОКУ</span><h2>Навчальний маршрут</h2><div class="map" id="yearMap"></div></div><div class="card span12"><span class="pill">STEM-МІСІЇ</span><h2>Застосовуємо все разом</h2><p>Після базових тем відкриваються задачі, де потрібно одночасно використати алгебру, геометрію та фізику.</p><div class="actions">
+<button onclick="openLesson('stem-route')">Маршрут велосипедиста</button>
+<button onclick="openLesson('stem-bridge')">Міст і масштаб</button>
+<button onclick="openLesson('stem-lab')">Мінілабораторія густини</button>
+<button onclick="openLesson('stem-rescue')">Рятувальний маршрут</button>
+<button onclick="openLesson('stem-crane')">Підйомний кран</button>
+<button onclick="openLesson('stem-water')">Резервуар води</button>
+</div></div></div></section>
+<section id="course" class="hidden"><div class="course"><aside class="card sidebar"><b>Навчальні модулі</b><div class="small">Обери тему або продовжуй послідовно.</div><div class="module-list" id="moduleList"></div></aside><article id="lessonArea"></article></div></section>
+<section id="parent" class="parent"><div class="grid"><div class="card span12"><h2>Батьківський звіт</h2><div class="stats"><div class="stat"><span class="small">Спроб</span><b id="pAttempts">0</b></div><div class="stat"><span class="small">Самостійно правильно</span><b id="pCorrect">0</b></div><div class="stat"><span class="small">Точність</span><b id="pAccuracy">0%</b></div><div class="stat"><span class="small">Вивчено тем</span><b id="pTopics">0</b></div></div></div><div class="card span6"><h3>Mastery за навичками</h3><div id="mastery"></div></div><div class="card span6"><h3>Карта помилок</h3><div id="errorMap"></div></div><div class="card span12"><h3>Правило системи</h3><p>Застосунок <b>ніколи не показує готового розв'язку</b>. Після неправильної відповіді завжди пояснює конкретну помилку, пропонує повторити потрібне поняття й дає дитині виправити роботу самостійно.</p><div class="actions"><button onclick="exportProgress()">Експорт прогресу</button><button class="secondary" onclick="importProgress()">Імпорт прогресу</button><button class="danger" onclick="resetProgress()">Скинути</button></div></div></div>
+<div class="reset-progress-panel">
+  <div>
+    <b>Почати навчання заново</b>
+    <div class="muted">Видалити виконані задачі, помилки, слабкі місця та весь збережений прогрес.</div>
+  </div>
+  <button class="reset-progress-btn" onclick="resetProgress()">↺ Скинути весь прогрес</button>
+</div>
+</section>
+
+<section id="yearPathView" class="view" style="display:none">
+  <div class="topline">
+    <button class="secondary" onclick="goHome()">← Головна</button>
+    <div><b>Навчальний маршрут 7 класу</b><div class="muted">Послідовність тем, передумови та інтегровані контрольні точки</div></div>
+  </div>
+  <div id="yearPathContent"></div>
+</section>
+<section id="todayPlanView" class="view" style="display:none">
+  <div class="topline">
+    <button class="secondary" onclick="goHome()">← Головна</button>
+    <div><b>План на сьогодні</b><div class="muted">Не більше кількох змістовних кроків за одне заняття</div></div>
+  </div>
+  <div id="todayPlanContent"></div>
+</section>
+</main><script>
+// Explicit DOM references for Android/Samsung Internet compatibility
+const home=document.getElementById('home'), course=document.getElementById('course'), parent=document.getElementById('parent');
+const lessonArea=document.getElementById('lessonArea'), moduleList=document.getElementById('moduleList');
+const $=id=>document.getElementById(id);
+
+const lessons=[
+{id:'alg-expr',s:'alg',title:'Числові та буквені вирази',skill:'Вирази',theory:'Буквений вираз описує правило обчислення. Значення виразу залежить від значень змінних.',formula:'2a + 3b',visual:'balance',q:{text:'Обчисли 2a + 3b, якщо a = 4, b = 5.',ans:23,error:'Перевір порядок дій і підстановку значень a та b.',review:'Підстановка значень у буквений вираз.'}},
+{id:'alg-power',s:'alg',title:'Степінь з натуральним показником',skill:'Степені',theory:'Степінь aⁿ — це добуток n однакових множників a.',formula:'aⁿ = a·a·…·a',visual:'power',q:{text:'Обчисли 3⁴.',ans:81,error:'Схоже, степінь було сприйнято як множення 3·4. Показник означає кількість однакових множників.',review:'Що означає основа та показник степеня.'}},
+{id:'alg-poly',s:'alg',title:'Одночлени та многочлени',skill:'Многочлени',theory:'Подібні доданки мають однакову буквену частину. Їх коефіцієнти можна додавати або віднімати.',formula:'3x + 5x = 8x',visual:'tiles',q:{text:'Спрости: 7x + 3x − 4x. Введи коефіцієнт при x.',ans:6,error:'Об’єднай лише подібні доданки та уважно врахуй знак мінус.',review:'Коефіцієнт і подібні доданки.'}},
+{id:'alg-formulas',s:'alg',title:'Формули скороченого множення',skill:'Формули множення',theory:'Формули допомагають швидко розкривати дужки та бачити структуру виразу.',formula:'(a+b)² = a² + 2ab + b²',visual:'square',q:{text:'Для (x+3)² коефіцієнт при x дорівнює…',ans:6,error:'У середньому доданку використовується 2·x·3.',review:'Квадрат суми та роль середнього доданка.'}},
+{id:'alg-equation',s:'alg',title:'Лінійні рівняння',skill:'Рівняння',theory:'Рівняння зберігає рівність, якщо виконувати однакові допустимі дії з обома частинами.',formula:'ax + b = c',visual:'balance',q:{text:'Розв’яжи: 3x + 5 = 20.',ans:5,error:'Спочатку ізолюй доданок 3x, а потім знайди x.',review:'Обернені дії та рівносильні перетворення рівнянь.'}},
+{id:'alg-monomial',s:'alg',title:'Одночлени: множення і степінь',skill:'Одночлени',theory:'Одночлен — добуток числового коефіцієнта та степенів змінних. При множенні одночленів коефіцієнти множать, а показники однакових основ додають.',formula:'aᵐ·aⁿ = aᵐ⁺ⁿ',visual:'power',q:{text:'Спрости 2x²·3x³. Введи показник степеня x.',ans:5,error:'Для однакової основи x показники при множенні додаються.',review:'Множення степенів з однаковою основою.'}},
+{id:'alg-multiply',s:'alg',title:'Множення одночлена і многочлена',skill:'Розкриття дужок',theory:'Щоб помножити одночлен на многочлен, помнож його на кожний доданок у дужках, зберігаючи знаки.',formula:'a(b+c)=ab+ac',visual:'tiles',q:{text:'Розкрий 3(x+4). Введи вільний член.',ans:12,error:'Число 3 множиться не лише на x, а й на 4.',review:'Розподільна властивість множення.'}},
+{id:'alg-factor',s:'alg',title:'Розкладання многочлена на множники',skill:'Розкладання на множники',theory:'Розкласти на множники означає подати суму або різницю як добуток. Перший крок — пошук спільного множника всіх членів.',formula:'ab+ac=a(b+c)',visual:'tiles',q:{text:'У 6x+9 найбільший спільний числовий множник дорівнює…',ans:3,error:'Шукай найбільше число, на яке діляться обидва коефіцієнти.',review:'Винесення спільного множника за дужки.'}},
+{id:'alg-system',s:'alg',title:'Системи двох лінійних рівнянь',skill:'Системи рівнянь',theory:'Розв’язок системи — пара чисел, яка одночасно задовольняє обидва рівняння. Один зі способів — виразити одну змінну та підставити в інше рівняння.',formula:'{ x+y=a; x−y=b }',visual:'graph',q:{text:'x+y=10, x−y=2. Знайди x.',ans:6,error:'Спробуй додати рівняння: члени з y взаємно знищаться.',review:'Метод додавання для систем рівнянь.'}},
+{id:'alg-function',s:'alg',title:'Функція та графік',skill:'Функції',theory:'Функція задає залежність однієї величини від іншої. Графік показує всі пари значень на координатній площині.',formula:'y = kx + b',visual:'graph',q:{text:'Для y = 2x + 1 знайди y при x = 4.',ans:9,error:'Підстав x = 4 саме замість x і виконай множення перед додаванням.',review:'Підстановка аргументу у формулу функції.'}},
+{id:'geo-angle',s:'geo',title:'Кути та суміжні кути',skill:'Кути',theory:'Суміжні кути мають спільну сторону, а дві інші утворюють пряму. Їх сума — 180°.',formula:'α + β = 180°',visual:'angles',q:{text:'Один із суміжних кутів 68°. Знайди другий.',ans:112,error:'Суміжні кути разом утворюють розгорнутий кут.',review:'Розгорнутий кут і сума суміжних кутів.'}},
+{id:'geo-parallel',s:'geo',title:'Паралельні прямі',skill:'Паралельні прямі',theory:'При перетині паралельних прямих січною виникають пари рівних кутів та односторонні кути із сумою 180°.',formula:'∠1 = ∠2',visual:'parallel',q:{text:'Відповідний кут дорівнює 57°. Яка величина другого відповідного кута?',ans:57,error:'Для паралельних прямих відповідні кути рівні.',review:'Відповідні та внутрішні різносторонні кути.'}},
+{id:'geo-triangle',s:'geo',title:'Трикутник і сума кутів',skill:'Трикутники',theory:'Сума внутрішніх кутів будь-якого трикутника дорівнює 180°.',formula:'α + β + γ = 180°',visual:'triangle',q:{text:'Кути трикутника 45° і 65°. Знайди третій.',ans:70,error:'Від 180° треба відняти обидва відомі кути.',review:'Сума внутрішніх кутів трикутника.'}},
+{id:'geo-congruence',s:'geo',title:'Ознаки рівності трикутників',skill:'Рівність трикутників',theory:'Рівність трикутників можна встановити за достатнім набором відповідних елементів: сторонами та кутами.',formula:'SAS · ASA · SSS',visual:'congruence',q:{text:'Два трикутники мають рівні всі три відповідні сторони. Скільки пар сторін використано в ознаці?',ans:3,error:'Це ознака за трьома сторонами.',review:'Три основні ознаки рівності трикутників.'}},
+{id:'geo-circle',s:'geo',title:'Коло: радіус, діаметр, довжина',skill:'Коло',theory:'Діаметр проходить через центр і дорівнює двом радіусам. Довжина кола пропорційна діаметру.',formula:'C = 2πr = πd',visual:'circle',q:{text:'Діаметр 12 см. Знайди C при π = 3,14.',ans:37.68,error:'В умові дано діаметр, тому найпростіше використати C = πd.',review:'Радіус, діаметр і формула довжини кола.'}},
+{id:'geo-build',s:'geo',title:'Геометричні побудови',skill:'Побудови',theory:'Побудова — це послідовність точних геометричних дій. Важливо не лише отримати фігуру, а й обґрунтувати кроки.',formula:'циркуль + лінійка',visual:'bisector',q:{text:'Кут 80° поділили бісектрисою. Яка величина кожної частини?',ans:40,error:'Бісектриса ділить кут на дві рівні частини.',review:'Означення бісектриси кута.'}},
+{id:'phy-measure',s:'phy',title:'Фізичні величини та вимірювання',skill:'Вимірювання',theory:'Результат вимірювання містить число й одиницю. Порівнювати величини зручно після переведення в однакові одиниці.',formula:'значення = число × одиниця',visual:'ruler',q:{text:'2,5 м — це скільки сантиметрів?',ans:250,error:'Один метр містить 100 сантиметрів.',review:'Перетворення одиниць довжини.'}},
+{id:'phy-motion',s:'phy',title:'Механічний рух. Шлях і переміщення',skill:'Шлях і переміщення',theory:'Шлях l — довжина траєкторії. Модуль переміщення s — довжина прямого відрізка від початку до кінця руху.',formula:'l ≥ s',visual:'semicircle',q:{text:'Тіло пройшло півкола радіусом 10 м. Знайди l при π=3,14.',ans:31.4,error:'Для шляху потрібна довжина дуги півкола, а не діаметр.',review:'Різниця між траєкторією, шляхом і переміщенням.'}},
+{id:'phy-speed',s:'phy',title:'Швидкість',skill:'Швидкість',theory:'Швидкість показує, який шлях тіло проходить за одиницю часу.',formula:'v = l / t',visual:'speed',q:{text:'Тіло пройшло 180 м за 30 с. Знайди v.',ans:6,error:'Швидкість — це шлях, поділений на час.',review:'Зв’язок l, v і t та одиниці швидкості.'}},
+{id:'phy-graph',s:'phy',title:'Графіки руху',skill:'Графіки руху',theory:'На графіку l(t) нахил показує швидкість: чим швидше зростає шлях, тим більша швидкість.',formula:'v = Δl / Δt',visual:'motiongraph',q:{text:'За 4 с шлях зріс з 20 м до 60 м. Знайди середню швидкість на цій ділянці.',ans:10,error:'Використай зміну шляху 60−20 і зміну часу 4 с.',review:'Як читати приріст величини на графіку.'}},
+{id:'phy-force',s:'phy',title:'Взаємодія тіл і сила',skill:'Сила',theory:'Сила характеризує взаємодію тіл і може змінювати швидкість або форму тіла. Одиниця сили — ньютон.',formula:'F, Н',visual:'force',q:{text:'На тіло діють 8 Н вправо і 3 Н вліво. Який модуль результуючої сили?',ans:5,error:'Сили спрямовані протилежно, тому їх модулі віднімаються.',review:'Напрям сили та додавання протилежно спрямованих сил.'}},
+{id:'phy-density',s:'phy',title:'Маса, об’єм і густина',skill:'Густина',theory:'Густина показує масу одиниці об’єму речовини.',formula:'ρ = m / V',visual:'density',q:{text:'Маса тіла 540 г, об’єм 200 см³. Знайди густину в г/см³.',ans:2.7,error:'Поділи масу на об’єм, не навпаки.',review:'Формула густини та узгодження одиниць.'}},
+{id:'phy-pressure',s:'phy',title:'Тиск',skill:'Тиск',theory:'Тиск залежить від сили, що діє перпендикулярно до поверхні, та площі цієї поверхні.',formula:'p = F / S',visual:'pressure',q:{text:'Сила 120 Н діє на площу 0,4 м². Знайди тиск у Па.',ans:300,error:'Тиск дорівнює силі, поділеній на площу.',review:'Формула тиску та одиниця паскаль.'}},
+{id:'phy-work',s:'phy',title:'Механічна робота і потужність',skill:'Робота і потужність',theory:'Механічна робота пов’язує силу та переміщення, а потужність показує швидкість виконання роботи.',formula:'A = Fs · P = A/t',visual:'work',q:{text:'Виконано роботу 600 Дж за 20 с. Знайди потужність у ватах.',ans:30,error:'Потужність — робота, поділена на час.',review:'Різниця між роботою та потужністю.'}},
+{id:'stem-route',s:'stem',title:'STEM-місія: маршрут велосипедиста',skill:'STEM: маршрут',theory:'Тут одна ситуація поєднує геометрію маршруту, фізичні поняття шляху й переміщення та алгебраїчні обчислення швидкості. Спочатку побудуй модель маршруту, а вже потім обирай формулу.',formula:'геометрія → l і s → v = l/t',visual:'route',q:{text:'Маршрут 300 м на схід і 400 м на північ. Знайди модуль переміщення.',ans:500,error:'Не додавай сторони: переміщення — пряма від старту до фінішу.',review:'Прямокутний трикутник, шлях і переміщення.'}},
+{id:'stem-bridge',s:'stem',title:'STEM-місія: міст і масштаб',skill:'STEM: масштаб і рух',theory:'План переводить реальний об’єкт у масштаб. Після відновлення реальної довжини її можна використати як фізичний шлях і пов’язати з часом та швидкістю.',formula:'масштаб → реальна довжина → v = l/t',visual:'bridge',q:{text:'На плані 1 см відповідає 25 м. Міст має 7,2 см. Знайди реальну довжину.',ans:180,error:'Використай відповідність масштабу для кожного сантиметра плану.',review:'Масштаб і пропорція.'}},
+{id:'stem-lab',s:'stem',title:'STEM-місія: мінілабораторія густини',skill:'STEM: експеримент',theory:'У лабораторії геометричний або виміряний об’єм поєднується з масою. Алгебра допомагає перебудовувати формулу густини залежно від того, яку величину треба знайти.',formula:'V → ρ = m/V → m = ρV',visual:'lab',q:{text:'Вода піднялась зі 120 мл до 170 мл. Маса тіла 135 г. Знайди густину.',ans:2.7,error:'Спочатку знайди об’єм тіла як приріст рівня води.',review:'Витіснення води та густина.'}},
+{id:'stem-rescue',s:'stem',title:'STEM-місія: рятувальний маршрут',skill:'STEM: оптимальний маршрут',theory:'Рятувальник має порівняти ламаний маршрут із прямим. Геометрія дає довжини, фізика — час руху, а алгебра дозволяє знайти невідому швидкість або час.',formula:'геометрія маршруту → l → t = l/v',visual:'rescue',q:{text:'Маршрут складається з 600 м і 800 м. Який шлях пройде рятувальник?',ans:1400,error:'Шлях — сума всіх реально пройдених ділянок.',review:'Шлях як довжина ламаної.'}},
+{id:'stem-crane',s:'stem',title:'STEM-місія: підйомний кран',skill:'STEM: робота і геометрія',theory:'Під час підйому вантажу треба пов’язати силу, вертикальне переміщення, механічну роботу й потужність. Геометрична висота стає фізичним переміщенням.',formula:'A = F·s → P = A/t',visual:'crane',q:{text:'Кран діє силою 500 Н і піднімає вантаж на 6 м. Знайди роботу в Дж.',ans:3000,error:'Коли сила напрямлена вздовж переміщення, робота — добуток F і s.',review:'Механічна робота.'}},
+{id:'stem-water',s:'stem',title:'STEM-місія: резервуар води',skill:'STEM: об’єм і маса',theory:'Резервуар — приклад, де геометричні розміри дають об’єм, густина пов’язує об’єм із масою, а алгебра організовує багатокрокове обчислення.',formula:'V = a·b·h → m = ρV',visual:'tank',q:{text:'Прямокутний резервуар має 2 м × 1 м × 1 м. Знайди об’єм у м³.',ans:2,error:'Об’єм прямокутного паралелепіпеда — добуток трьох вимірів.',review:'Об’єм прямокутного паралелепіпеда.'}}
+];
+const practiceBanks={
+'alg-expr':[
+{text:'Обчисли 3a + 2b, якщо a = 5, b = 4.',ans:23,error:'Перевір підстановку: спочатку заміни букви числами, потім виконай множення.',review:'Підстановка значень у буквений вираз.',type:'підстановка',explain:'Букви тут означають конкретні числа. Спочатку перепиши вираз, замінивши a і b їхніми значеннями. Множення виконується раніше за додавання.'},
+{text:'Обчисли 4x − y, якщо x = 6, y = 7.',ans:17,error:'Зверни увагу на знак мінус перед y.',review:'Порядок дій і знаки у виразах.',type:'знаки',explain:'Після підстановки отримаєш числовий вираз. Спочатку знайди добуток 4·x, а віднімання y виконай після цього. Мінус перед y не можна загубити.'},
+{text:'Обчисли 2m + 5, якщо m = −3.',ans:-1,error:'Після підстановки від’ємного числа уважно виконай множення 2·(−3).',review:'Дії з від’ємними числами.',type:'від’ємні числа',explain:'Від’ємне значення змінної підставляй у дужках: так видно, що знак належить числу. Додатне число, помножене на від’ємне, дає від’ємний добуток.'},
+{text:'Обчисли −3a + 4, якщо a = −2.',ans:10,error:'Добуток двох від’ємних чисел є додатним.',review:'Множення чисел з різними та однаковими знаками.',type:'від’ємні числа',explain:'Коли і коефіцієнт, і значення змінної від’ємні, у добутку два мінуси дають плюс. Після множення переходь до додавання.'},
+{text:'Обчисли 5p − 2q, якщо p = 3, q = −4.',ans:23,error:'Віднімання від’ємного числа перетворюється на додавання.',review:'Віднімання від’ємних чисел.',type:'знаки',explain:'Підстав q у дужках. Конструкція «мінус від’ємне число» змінюється на додавання. Не змінюй знак p — він тут додатний.'},
+{text:'Обчисли 2(a + b), якщо a = −5, b = 8.',ans:6,error:'Спочатку обчисли значення в дужках, потім помнож на 2.',review:'Порядок дій із дужками.',type:'порядок дій',explain:'Дужки мають пріоритет. Спочатку знайди суму a+b після підстановки значень, а вже отриманий результат помнож на зовнішній коефіцієнт.'}
+],
+'alg-power':[
+{text:'Обчисли 2⁵.',ans:32,error:'Показник 5 означає п’ять множників 2, а не 2·5.',review:'Зміст натурального показника степеня.',type:'поняття степеня',explain:'У степені основа — число, яке повторюється множником, а показник — кількість таких множників. Розгорни степінь як добуток однакових чисел.'},
+{text:'Обчисли (−2)⁴.',ans:16,error:'Парна кількість від’ємних множників дає додатний результат.',review:'Знак степеня від’ємного числа.',type:'знак',explain:'Дужки показують, що основа степеня — саме −2. За парного показника від’ємні множники утворюють пари, тому результат додатний.'},
+{text:'Обчисли 5³.',ans:125,error:'Запиши 5·5·5 і обчисли послідовно.',review:'Степінь як добуток однакових множників.',type:'обчислення',explain:'Третій степінь означає три однакові множники. Не множ 5 на 3 — перемнож три п’ятірки.'},
+{text:'Обчисли (−3)³.',ans:-27,error:'Непарна кількість від’ємних множників дає від’ємний результат.',review:'Непарний степінь від’ємного числа.',type:'знак степеня',explain:'Якщо від’ємна основа взята у непарний степінь, один від’ємний множник лишається без пари, тому знак результату від’ємний.'},
+{text:'Обчисли 10⁴.',ans:10000,error:'10⁴ — це 10·10·10·10.',review:'Степені числа 10.',type:'степені 10',explain:'Кожне множення на 10 додає один нуль. Для натурального степеня 10 показник підказує кількість нулів після одиниці.'},
+{text:'Обчисли 3² + 4².',ans:25,error:'Спочатку обчисли кожен степінь окремо, потім додай.',review:'Порядок дій зі степенями.',type:'порядок дій',explain:'Піднесення до степеня виконується раніше за додавання. Тому спочатку знайди значення обох квадратів, а вже потім їх суму.'}
+],
+'alg-poly':[
+{text:'Спрости: 9x − 2x + x. Введи коефіцієнт при x.',ans:8,error:'У x без записаного числа коефіцієнт дорівнює 1.',review:'Коефіцієнт і подібні доданки.',type:'коефіцієнт',explain:'Усі три доданки мають однакову буквену частину x, тому працюємо лише з коефіцієнтами. У самотнього x коефіцієнт 1.'},
+{text:'Спрости: 5a + 4 − 2a + 3. Введи коефіцієнт при a.',ans:3,error:'Об’єднуй між собою лише доданки з однаковою буквеною частиною.',review:'Подібні й неподібні доданки.',type:'подібні доданки',explain:'Буквені доданки 5a і −2a можна об’єднати. Числа 4 і 3 утворюють окрему групу й не впливають на коефіцієнт при a.'},
+{text:'Спрости: −3y + 8y − 2y. Введи коефіцієнт при y.',ans:3,error:'Стеж за знаком першого коефіцієнта: він дорівнює −3.',review:'Додавання коефіцієнтів зі знаками.',type:'знаки',explain:'Оскільки буквена частина всюди y, склади числові коефіцієнти разом з їхніми знаками. Не відкидай мінус перед першим членом.'},
+{text:'Спрости: 4m + 7 − m − 2. Введи вільний член.',ans:5,error:'Вільні члени — це доданки без змінної.',review:'Вільний член многочлена.',type:'вільний член',explain:'Щоб знайти вільний член після спрощення, працюй тільки з числами без букв. Буквені члени спрощуються окремо.'},
+{text:'Спрости: 2x + 3x − 4 + 9. Введи коефіцієнт при x.',ans:5,error:'Числа без x не можна додавати до коефіцієнта при x.',review:'Групування подібних членів.',type:'групування',explain:'Розбий вираз на дві групи: члени з x та звичайні числа. Для запитаного коефіцієнта потрібна тільки перша група.'},
+{text:'Спрости: −a + 6a − 2a. Введи коефіцієнт при a.',ans:3,error:'Перед a без числа стоїть коефіцієнт −1.',review:'Неявний коефіцієнт −1.',type:'коефіцієнт',explain:'Запис −a означає −1·a. Після цього всі члени стають явно подібними, і можна додати їхні коефіцієнти.'}
+],
+'alg-formulas':[
+{text:'У виразі (x+5)² знайди коефіцієнт при x після розкриття дужок.',ans:10,error:'Середній доданок квадрата суми дорівнює 2·x·5.',review:'Квадрат суми.',type:'структура формули',explain:'У формулі квадрата суми середній член утворюється як подвоєний добуток першого й другого виразів. Саме він містить x у першому степені.'},
+{text:'Обчисли (10+2)² за формулою квадрата суми.',ans:144,error:'Перевір усі три частини: a², 2ab і b².',review:'(a+b)² = a²+2ab+b².',type:'застосування формули',explain:'Розпізнай a і b, потім окремо знайди квадрат першого, подвоєний добуток і квадрат другого. Лише після цього складай результати.'},
+{text:'У виразі (a−4)² знайди коефіцієнт при a.',ans:-8,error:'Для квадрата різниці середній доданок має знак мінус: −2ab.',review:'Квадрат різниці.',type:'знак у формулі',explain:'Квадрат різниці має три члени, але середній від’ємний. Коефіцієнт при a виникає саме з −2·a·4.'},
+{text:'Обчисли (7−2)².',ans:25,error:'Квадрат стосується всієї різниці в дужках.',review:'Квадрат різниці як значення виразу.',type:'дужки і степінь',explain:'Дужки означають, що спочатку утворюється одна різниця, і вже весь її результат підноситься до квадрата. Це не те саме, що 7²−2².'},
+{text:'У виразі (x+3)² знайди вільний член після розкриття.',ans:9,error:'Вільний член утворюється квадратом другого доданка.',review:'Структура квадрата суми.',type:'вільний член формули',explain:'Після розкриття квадрата суми член без x походить від квадрата числового доданка. Середній член міститиме x і тому не є вільним.'},
+{text:'Обчисли 19·21, використовуючи (a−b)(a+b)=a²−b².',ans:399,error:'19 і 21 симетричні відносно 20.',review:'Різниця квадратів.',type:'різниця квадратів',explain:'Коли два множники відрізняються від одного середнього числа на однакову величину, їх можна подати як (a−b)(a+b) і застосувати різницю квадратів.'}
+],
+'alg-equation':[
+{text:'Розв’яжи: 4x + 7 = 31.',ans:6,error:'Спочатку прибери +7 однаковою дією з обох частин.',review:'Рівносильні перетворення рівнянь.',type:'обернені дії',explain:'Щоб залишити член з x окремо, виконай дію, обернену до +7, з обома частинами рівняння. Потім прибери множник біля x діленням.'},
+{text:'Розв’яжи: 5x − 10 = 20.',ans:6,error:'Щоб ізолювати 5x, спочатку компенсуй −10.',review:'Перенесення через однакові дії.',type:'обернені дії',explain:'Спочатку нейтралізуй віднімання 10 додаванням 10 до обох частин. Лише після цього діли на коефіцієнт при x.'},
+{text:'Розв’яжи: 18 − 3x = 6.',ans:4,error:'Після віднімання 18 отримаєш від’ємний коефіцієнт при x — не загуби знак.',review:'Рівняння з від’ємним коефіцієнтом.',type:'знак',explain:'Тут x має коефіцієнт −3. Коли ізолюєш член −3x, діли обидві частини саме на −3, а не на 3.'},
+{text:'Розв’яжи: 7x = −35.',ans:-5,error:'Додатний коефіцієнт ділить від’ємну праву частину.',review:'Рівняння з від’ємним коренем.',type:'від’ємний корінь',explain:'Якщо добуток додатного коефіцієнта та x є від’ємним, x має бути від’ємним. Поділи обидві частини на коефіцієнт 7.'},
+{text:'Розв’яжи: 2(x + 3) = 14.',ans:4,error:'Можна спочатку поділити обидві частини на 2, а потім прибрати +3.',review:'Рівняння з дужками.',type:'рівняння з дужками',explain:'Коли весь вираз у дужках помножений на число, зручно спершу скасувати зовнішнє множення діленням обох частин, а потім працювати з дужками.'},
+{text:'Розв’яжи: 3x + 5 = x + 17.',ans:6,error:'Збери члени з x в одній частині, числа — в іншій.',review:'Невідоме в обох частинах рівняння.',type:'x в обох частинах',explain:'Однакові дії з обома частинами дозволяють прибрати x з однієї сторони. Після цього зведи рівняння до форми «коефіцієнт·x = число».'}
+],
+'alg-monomial':[
+{text:'Спрости x²·x⁴. Введи показник степеня x.',ans:6,error:'При множенні степенів з однаковою основою показники додаються.',review:'Правило aᵐ·aⁿ=aᵐ⁺ⁿ.',type:'показники степеня',explain:'Основа x не змінюється. Порахуй, скільки множників x містить перший степінь і скільки другий; разом це дає новий показник.'},
+{text:'Спрости 3a²·4a. Введи числовий коефіцієнт.',ans:12,error:'Числові коефіцієнти множаться між собою.',review:'Коефіцієнт добутку одночленів.',type:'коефіцієнт',explain:'Розділи задачу на дві частини: числа множаться з числами, буквені множники — з буквами тієї самої основи. Тут запитують лише числовий коефіцієнт.'},
+{text:'Спрости (2x²)³. Введи показник степеня x.',ans:6,error:'При піднесенні степеня до степеня показники множаться.',review:'Правило (aᵐ)ⁿ=aᵐⁿ.',type:'степінь степеня',explain:'Зовнішній показник означає повторення всього одночлена. Для змінної це приводить до множення внутрішнього і зовнішнього показників.'},
+{text:'Спрости −2b·5b². Введи числовий коефіцієнт.',ans:-10,error:'Від’ємний коефіцієнт, помножений на додатний, залишається від’ємним.',review:'Знаки при множенні одночленів.',type:'знак коефіцієнта',explain:'Спочатку визнач знак добутку коефіцієнтів, потім їх модуль. Буквена частина не змінює знак числового коефіцієнта.'},
+{text:'Спрости y³·y²·y. Введи показник степеня y.',ans:6,error:'У y без показника показник дорівнює 1.',review:'Неявний показник 1.',type:'неявний показник',explain:'Кожен множник y можна записати як y¹. Для однакової основи склади всі показники, включно з неявною одиницею.'},
+{text:'Спрости 0,5m²·8m³. Введи числовий коефіцієнт.',ans:4,error:'Помнож десятковий коефіцієнт 0,5 на 8.',review:'Множення числових коефіцієнтів.',type:'десятковий коефіцієнт',explain:'Правило для одночленів не залежить від того, цілі коефіцієнти чи десяткові. Окремо перемнож числа, окремо об’єднай степені однакової змінної.'}
+],
+'alg-multiply':[
+{text:'Розкрий 2(x+5). Введи вільний член.',ans:10,error:'Зовнішній множник 2 треба помножити на 5.',review:'Розподільна властивість.',type:'розподільна властивість',explain:'Множник перед дужками стосується кожного члена всередині. Вільний член після розкриття утворюється множенням зовнішнього числа на числовий доданок.'},
+{text:'Розкрий −3(x−4). Введи вільний член.',ans:12,error:'Добуток −3 і −4 є додатним.',review:'Розкриття дужок зі знаками.',type:'знаки',explain:'Помнож −3 окремо на кожний член у дужках. Особливо стеж за другим добутком: два від’ємні множники дають додатний результат.'},
+{text:'Розкрий 5(2x+3). Введи коефіцієнт при x.',ans:10,error:'5 множиться на коефіцієнт 2 перед x.',review:'Множення одночлена на многочлен.',type:'коефіцієнт',explain:'Щоб знайти коефіцієнт при x після розкриття, достатньо перемножити зовнішній множник і коефіцієнт того члена, який містить x.'},
+{text:'Спрости 2(x+3)+x. Введи коефіцієнт при x.',ans:3,error:'Після розкриття дужок об’єднай подібні члени з x.',review:'Розкриття дужок і зведення подібних.',type:'два кроки',explain:'Спочатку застосуй розподільну властивість. Лише після повного розкриття дужок шукай подібні доданки й складай їхні коефіцієнти.'},
+{text:'Спрости 4(2−x). Введи коефіцієнт при x.',ans:-4,error:'Перед x у дужках стоїть коефіцієнт −1.',review:'Неявний коефіцієнт −1.',type:'мінус перед змінною',explain:'Запис −x означає −1·x. Зовнішній множник треба помножити саме на −1, тому знак коефіцієнта після розкриття важливий.'},
+{text:'Спрости −2(3x+5)+x. Введи коефіцієнт при x.',ans:-5,error:'Після множення −2·3x отримай −6x і лише потім додай x.',review:'Дужки, знаки та подібні доданки.',type:'комбінована',explain:'Виконуй послідовно: розкрий дужки з урахуванням від’ємного множника, потім об’єднай члени з однаковою буквеною частиною.'}
+],
+'alg-factor':[
+{text:'У 8x+12 найбільший спільний числовий множник дорівнює…',ans:4,error:'Знайди найбільший спільний дільник 8 і 12.',review:'Спільний числовий множник.',type:'спільний множник',explain:'Щоб винести найбільший числовий множник, знайди найбільше число, на яке без остачі діляться коефіцієнти всіх членів.'},
+{text:'У 15a−20 найбільший спільний числовий множник дорівнює…',ans:5,error:'Перевір спільні дільники 15 і 20.',review:'НСД коефіцієнтів.',type:'спільний множник',explain:'Знак між членами не заважає пошуку спільного числового множника. Порівняй дільники модулів коефіцієнтів.'},
+{text:'Розклад 6x²+9x містить спільний x у степені…',ans:1,error:'Виноситься найменший степінь x, присутній у кожному члені.',review:'Спільний буквений множник.',type:'буквений множник',explain:'Для спільної змінної можна винести лише той степінь, який гарантовано міститься в кожному члені. Обирай найменший показник серед членів.'},
+{text:'Для x²−25 у формулі різниці квадратів число b дорівнює…',ans:5,error:'25 треба подати як квадрат числа.',review:'a²−b²=(a−b)(a+b).',type:'різниця квадратів',explain:'Порівняй вираз із шаблоном a²−b². Другий член має бути квадратом: знайди число, квадрат якого дорівнює 25.'},
+{text:'Для 4x²−9 у різниці квадратів коефіцієнт при x у першому множнику за модулем дорівнює…',ans:2,error:'4x²=(2x)².',review:'Розпізнавання повних квадратів.',type:'повний квадрат',explain:'Щоб застосувати різницю квадратів, подай кожен член як квадрат цілого виразу. Квадрат 2x дає 4x².'},
+{text:'У 12ab+18a найбільший спільний числовий множник дорівнює…',ans:6,error:'Знайди НСД чисел 12 і 18.',review:'Винесення спільного множника.',type:'число і буква',explain:'Спільний множник може містити і число, і букву. Але запитано лише числову частину, тому знайди найбільший спільний дільник коефіцієнтів.'}
+],
+'alg-system':[
+{text:'x+y=12, x−y=4. Знайди x.',ans:8,error:'Додавання рівнянь прибирає y.',review:'Метод додавання.',type:'метод додавання',explain:'Якщо коефіцієнти при одній змінній протилежні, додай ліві й праві частини рівнянь. Ця змінна зникне, і залишиться рівняння з одним невідомим.'},
+{text:'x+y=9, x−y=1. Знайди y.',ans:4,error:'Спочатку знайди одну змінну методом додавання, потім підстав у будь-яке початкове рівняння.',review:'Повернення до другої змінної.',type:'друга змінна',explain:'Після знаходження першої змінної система ще не розв’язана. Підстав її значення в простіше з двох початкових рівнянь і знайди другу.'},
+{text:'y=2x, x+y=12. Знайди x.',ans:4,error:'Підстав вираз 2x замість y у друге рівняння.',review:'Метод підстановки.',type:'підстановка',explain:'Перше рівняння вже виражає y через x. Тому в другому рівнянні кожне y можна замінити рівним йому виразом 2x.'},
+{text:'y=x+3, x+y=11. Знайди x.',ans:4,error:'Заміни y на x+3 і зведи подібні члени.',review:'Метод підстановки з вільним членом.',type:'підстановка',explain:'Підстановка перетворює систему на одне рівняння з x. Не загуби вільний член +3 після заміни y.'},
+{text:'2x+y=11, y=5. Знайди x.',ans:3,error:'Відоме y можна одразу підставити у перше рівняння.',review:'Перевірка пари значень у системі.',type:'відоме значення',explain:'Коли одна змінна вже задана числом, система фактично зводиться до одного лінійного рівняння. Підстав відоме значення без додаткових перетворень.'},
+{text:'x+y=7, 2x+2y=14. Скільки різних розв’язків має система: введи 0 для жодного, 1 для одного, 2 для нескінченно багатьох.',ans:2,error:'Друге рівняння є першим, помноженим на 2.',review:'Залежні рівняння системи.',type:'кількість розв’язків',explain:'Порівняй рівняння: якщо одне повністю отримується множенням іншого на ненульове число, вони описують ту саму пряму, а не дві різні умови.'}
+],
+'alg-function':[
+{text:'Для y = 3x − 2 знайди y при x = 5.',ans:13,error:'Спочатку виконай 3·5, потім відніми 2.',review:'Підстановка аргументу у функцію.',type:'підстановка',explain:'x — вхідне значення, y — результат. Підстав заданий x у формулу замість кожного x і виконай дії у правильному порядку.'},
+{text:'Для y = −2x + 7 знайди y при x = 3.',ans:1,error:'Коефіцієнт при x від’ємний.',review:'Лінійна функція та знаки.',type:'знак',explain:'Мінус належить коефіцієнту −2. Спочатку помнож −2 на заданий x, а потім додай вільний член 7.'},
+{text:'Для y = 4x знайди x, якщо y = 28.',ans:7,error:'Тепер невідомим є x: поділи значення y на коефіцієнт 4.',review:'Зворотне читання формули функції.',type:'зворотна задача',explain:'Якщо відомий y, формула стає рівнянням відносно x. Ізолюй x оберненою дією — поділи обидві частини на коефіцієнт.'},
+{text:'Для y = 2x + 5 знайди x, якщо y = 17.',ans:6,error:'Спочатку прибери +5, потім поділи на 2.',review:'Знаходження аргументу за значенням функції.',type:'зворотна задача',explain:'Підстав відоме y у ліву частину. Далі розв’яжи отримане лінійне рівняння: спочатку вільний член, потім коефіцієнт при x.'},
+{text:'Функція y = −3x + 4. Знайди y при x = −2.',ans:10,error:'Добуток −3·(−2) є додатним.',review:'Функція з від’ємним аргументом.',type:'від’ємний аргумент',explain:'Від’ємний x підставляй у дужках. Добуток двох від’ємних чисел додатний; після множення додай вільний член.'},
+{text:'Для y = 5x − 10 знайди y при x = 0.',ans:-10,error:'При x=0 член 5x дорівнює нулю.',review:'Вільний член і перетин з віссю y.',type:'значення при x=0',explain:'Коли x дорівнює нулю, весь член kx зникає. Значення функції тоді дорівнює вільному члену b — це також точка перетину графіка з віссю y.'}
+],
+ 'geo-angle':[
+{text:'Один із суміжних кутів 124°. Знайди другий.',ans:56,error:'Суміжні кути разом дають 180°. Відніми від 180° відомий кут.',review:'Сума суміжних кутів дорівнює 180°.',type:'суміжні кути',explain:'Суміжні кути утворюють розгорнутий кут. Тому їхні градусні міри в сумі завжди дають 180°. Якщо один кут відомий, другий знаходять як різницю між 180° і відомим кутом.'},
+{text:'Один із вертикальних кутів 73°. Знайди протилежний вертикальний кут.',ans:73,error:'Вертикальні кути рівні.',review:'Властивість вертикальних кутів.',type:'вертикальні кути',explain:'Коли дві прямі перетинаються, протилежні кути називають вертикальними. Вони рівні, тому тут не потрібно нічого віднімати від 180°.'},
+{text:'Два суміжні кути рівні. Знайди величину кожного.',ans:90,error:'Два рівні кути разом дають 180°, тому поділи 180° навпіл.',review:'Суміжні кути та рівність кутів.',type:'рівні суміжні кути',explain:'Якщо суміжні кути рівні, познач кожен однаковою величиною. Разом вони утворюють 180°, отже вся величина ділиться на дві однакові частини.'},
+{text:'Один кут при перетині двох прямих дорівнює 41°. Знайди суміжний з ним кут.',ans:139,error:'Суміжний кут доповнює 41° до 180°.',review:'Розгорнутий кут.',type:'кут при перетині прямих',explain:'При перетині двох прямих сусідні кути є суміжними. Їхня сума 180°, тоді як протилежні кути рівні. Спочатку визнач, яку саме пару питають.'},
+{text:'Навколо точки три кути: 110°, 95° і третій. Знайди третій кут.',ans:155,error:'Повний кут навколо точки дорівнює 360°.',review:'Повний кут 360°.',type:'кути навколо точки',explain:'Повний оберт навколо однієї точки має 360°. Якщо кілька кутів заповнюють весь оберт без проміжків, їхні градусні міри треба скласти до 360°.'},
+{text:'Промінь ділить прямий кут на кути 27° і β. Знайди β.',ans:63,error:'Прямий кут дорівнює 90°.',review:'Прямий кут та частини кута.',type:'частини прямого кута',explain:'Прямий кут має 90°. Якщо промінь розділив його на дві частини, сума цих частин лишається 90°. Невідому частину знаходять відніманням.'}
+],
+'geo-parallel':[
+{text:'Відповідний кут при двох паралельних прямих дорівнює 64°. Знайди другий відповідний кут.',ans:64,error:'Відповідні кути при паралельних прямих рівні.',review:'Відповідні кути.',type:'відповідні кути',explain:'Якщо дві паралельні прямі перетинає січна, кути в однаковому положенні біля двох точок перетину є відповідними. Такі кути рівні.'},
+{text:'Внутрішній різносторонній кут дорівнює 118°. Знайди парний йому внутрішній різносторонній кут.',ans:118,error:'Внутрішні різносторонні кути при паралельних прямих рівні.',review:'Внутрішні різносторонні кути.',type:'різносторонні кути',explain:'Внутрішні різносторонні кути лежать між паралельними прямими по різні боки від січної. Для паралельних прямих вони мають однакову градусну міру.'},
+{text:'Один із внутрішніх односторонніх кутів дорівнює 72°. Знайди другий.',ans:108,error:'Внутрішні односторонні кути в сумі дають 180°.',review:'Внутрішні односторонні кути.',type:'односторонні кути',explain:'Внутрішні односторонні кути лежать між паралельними прямими з одного боку від січної. Вони не рівні загалом: їхня сума дорівнює 180°.'},
+{text:'При перетині двох паралельних прямих січною один гострий кут 35°. Знайди будь-який тупий кут.',ans:145,error:'Гострий і сусідній тупий кути є суміжними.',review:'Паралельні прямі + суміжні кути.',type:'гострий і тупий кути',explain:'У такій конфігурації всі гострі кути мають одну величину, а всі тупі — іншу. Гострий і сусідній тупий кут доповнюють один одного до 180°.'},
+{text:'Два внутрішні односторонні кути дорівнюють x і 3x. Знайди x.',ans:45,error:'Склади x+3x=180°.',review:'Односторонні кути та рівняння.',type:'геометричне рівняння',explain:'Властивість паралельних прямих дає суму 180°. Якщо кути записані через x, спочатку склади рівняння з цієї властивості, а потім знайди x.'},
+{text:'Відповідні кути задані як 2x+10° і 80°. Знайди x.',ans:35,error:'Відповідні кути рівні, тому 2x+10=80.',review:'Відповідні кути як основа рівняння.',type:'рівняння за кутами',explain:'Спочатку переклади геометричну властивість мовою алгебри: відповідні кути рівні. Після цього отримаєш звичайне лінійне рівняння.'}
+],
+'geo-triangle':[
+{text:'Два кути трикутника 48° і 67°. Знайди третій.',ans:65,error:'Сума трьох внутрішніх кутів трикутника 180°.',review:'Сума кутів трикутника.',type:'третій кут',explain:'У будь-якому трикутнику сума внутрішніх кутів дорівнює 180°. Склади два відомі кути й визнач, скільки не вистачає до 180°.'},
+{text:'У рівнобедреному трикутнику кут при вершині 40°. Знайди кут при основі.',ans:70,error:'Кути при основі рівнобедреного трикутника рівні.',review:'Властивість рівнобедреного трикутника.',type:'рівнобедрений трикутник',explain:'У рівнобедреному трикутнику два кути при основі однакові. Після віднімання вершини від 180° залишок треба поділити порівну між двома кутами.'},
+{text:'У рівнобедреному трикутнику кут при основі 52°. Знайди кут при вершині.',ans:76,error:'Другий кут при основі теж 52°.',review:'Кути при основі рівнобедреного трикутника.',type:'кут при вершині',explain:'Спочатку використай рівність двох кутів при основі. Потім від суми 180° відніми обидва однакові кути.'},
+{text:'Зовнішній кут трикутника дорівнює 125°, один із двох не суміжних з ним внутрішніх — 55°. Знайди другий.',ans:70,error:'Зовнішній кут дорівнює сумі двох внутрішніх кутів, не суміжних із ним.',review:'Властивість зовнішнього кута трикутника.',type:'зовнішній кут',explain:'Зовнішній кут трикутника можна розглядати як суму двох внутрішніх кутів, що не мають з ним спільної вершини. Тому невідомий кут — це різниця між зовнішнім і відомим віддаленим внутрішнім.'},
+{text:'Кути трикутника дорівнюють x, 2x і 3x. Знайди x.',ans:30,error:'Склади x+2x+3x=180°.',review:'Сума кутів трикутника та рівняння.',type:'кути через x',explain:'Коли кути задані через одну змінну, використай головну властивість трикутника: усі три кути разом дають 180°. Це перетворює геометричну задачу на рівняння.'},
+{text:'Чи може трикутник мати кути 90°, 60° і 30°? Введи 1, якщо так.',ans:1,error:'Перевір суму кутів: вона має бути 180°.',review:'Умова існування набору кутів трикутника.',type:'перевірка моделі',explain:'Для трьох додатних кутів головна перевірка тут — їхня сума. Якщо вона дорівнює 180°, такий набір кутів може утворювати трикутник.'}
+],
+'geo-congruence':[
+{text:'Два трикутники мають рівні три відповідні сторони. Скільки пар рівних сторін використано?',ans:3,error:'Ознака SSS використовує три пари відповідних сторін.',review:'Ознака рівності за трьома сторонами.',type:'SSS',explain:'Ознака за трьома сторонами означає: якщо всі три сторони одного трикутника відповідно дорівнюють трьом сторонам другого, трикутники рівні.'},
+{text:'Для ознаки за двома сторонами і кутом між ними скільки пар сторін потрібно?',ans:2,error:'Ця ознака використовує дві сторони та кут саме між ними.',review:'Ознака SAS.',type:'SAS',explain:'У цій ознаці порівнюють дві відповідні сторони та кут, утворений саме цими сторонами. Важливе слово «між»: довільний інший кут не дає цієї ознаки.'},
+{text:'Для ознаки за стороною і двома прилеглими до неї кутами скільки пар кутів потрібно?',ans:2,error:'Потрібні два прилеглі до відповідної сторони кути.',review:'Ознака ASA.',type:'ASA',explain:'Ознака за стороною та двома прилеглими кутами фіксує одну відповідну сторону і два кути на її кінцях. Саме дві пари кутів порівнюються.'},
+{text:'Якщо рівні трикутники мають відповідні сторони 7 см і x см, знайди x.',ans:7,error:'У рівних трикутників відповідні елементи рівні.',review:'Відповідні елементи рівних трикутників.',type:'наслідок рівності',explain:'Після встановлення рівності трикутників усі їхні відповідні сторони та кути рівні. Тому відповідну невідому сторону можна прирівняти до відомої.'},
+{text:'У двох рівних трикутниках відповідні кути дорівнюють 46° і x°. Знайди x.',ans:46,error:'Відповідні кути рівних трикутників рівні.',review:'Відповідні кути.',type:'відповідні кути',explain:'Рівність трикутників означає повний збіг форми й розмірів. Відповідні вершини збігаються, тому й градусні міри відповідних кутів однакові.'},
+{text:'Відомо AB=DE, BC=EF, AC=DF. Скільки рівностей сторін дано для доведення рівності трикутників?',ans:3,error:'Перелічено три пари відповідних сторін.',review:'Розпізнавання ознаки SSS.',type:'розпізнавання ознаки',explain:'Щоб вибрати ознаку, порахуй, які елементи вже дані рівними. Тут усі наведені рівності стосуються сторін, і їх три пари — це структура ознаки SSS.'}
+],
+'geo-circle':[
+{text:'Радіус кола 7 см. Знайди діаметр.',ans:14,error:'Діаметр удвічі більший за радіус.',review:'d=2r.',type:'радіус і діаметр',explain:'Радіус іде від центра до кола, а діаметр проходить через центр від одного краю кола до іншого. Тому діаметр складається з двох радіусів.'},
+{text:'Діаметр кола 18 см. Знайди радіус.',ans:9,error:'Радіус — половина діаметра.',review:'r=d/2.',type:'діаметр і радіус',explain:'Оскільки діаметр дорівнює двом радіусам, для зворотної задачі потрібно поділити діаметр навпіл.'},
+{text:'Радіус 5 см. Знайди довжину кола при π=3,14.',ans:31.4,error:'Використай C=2πr.',review:'Формула довжини кола через радіус.',type:'довжина кола',explain:'Якщо відомий радіус, довжина кола обчислюється як добуток 2, числа π та радіуса. Стеж, щоб не використати формулу площі.'},
+{text:'Діаметр 20 см. Знайди довжину кола при π=3,14.',ans:62.8,error:'Коли відомий діаметр, зручно C=πd.',review:'Формула довжини кола через діаметр.',type:'довжина через діаметр',explain:'Формули C=2πr і C=πd описують те саме. Якщо в умові вже є діаметр, друга форма коротша й не потребує спочатку знаходити радіус.'},
+{text:'Довжина кола 31,4 см при π=3,14. Знайди діаметр.',ans:10,error:'З C=πd отримуємо d=C/π.',review:'Обернена задача для довжини кола.',type:'обернена задача',explain:'Коли невідомий діаметр, формулу C=πd треба перетворити: поділити довжину кола на π. Це та сама залежність, але шукаємо іншу величину.'},
+{text:'Колесо має діаметр 0,5 м. Який шлях пройде точка на ободі за один повний оберт при π=3,14?',ans:1.57,error:'За один оберт колесо проходить відстань, рівну довжині кола.',review:'Довжина кола як шлях за один оберт.',type:'застосування',explain:'Один повний оберт означає, що обід «розгорнув» на дорозі всю свою довжину. Тому шлях за один оберт дорівнює довжині кола з відомим діаметром.'}
+],
+'geo-build':[
+{text:'Кут 96° поділили бісектрисою. Знайди кожну частину.',ans:48,error:'Бісектриса ділить кут на дві рівні частини.',review:'Означення бісектриси.',type:'бісектриса',explain:'Бісектриса — промінь із вершини кута, який ділить його на два рівні кути. Тому градусну міру початкового кута треба поділити навпіл.'},
+{text:'Відрізок 14 см поділили серединним перпендикуляром у точці перетину. Яка довжина кожної половини?',ans:7,error:'Середина ділить відрізок на дві рівні частини.',review:'Середина відрізка.',type:'середина відрізка',explain:'Точка середини має однакову відстань до обох кінців відрізка. Якщо відома повна довжина, кожна половина становить половину цієї довжини.'},
+{text:'Кут 70° поділили бісектрисою. Знайди кут між однією стороною та бісектрисою.',ans:35,error:'Бісектриса створює дві рівні половини початкового кута.',review:'Побудова бісектриси.',type:'результат побудови',explain:'Після правильної побудови бісектриси обидва нові кути рівні. Тому кут між бісектрисою і будь-якою стороною — половина початкового.'},
+{text:'На промені відклали відрізок 6 см, а потім ще один такий самий. Яка загальна відстань від початку?',ans:12,error:'Два однакові послідовні відрізки треба додати.',review:'Відкладання рівних відрізків циркулем.',type:'перенесення довжини',explain:'Циркуль дозволяє переносити ту саму довжину без повторного вимірювання. Якщо однакові відрізки відкладені послідовно на одному промені, загальна довжина є їх сумою.'},
+{text:'Бісектриса розгорнутого кута утворює з кожною його стороною який кут?',ans:90,error:'Розгорнутий кут 180°, бісектриса ділить його навпіл.',review:'Бісектриса розгорнутого кута.',type:'побудова перпендикуляра',explain:'Розгорнутий кут має 180°. Його бісектриса утворює дві рівні частини, тому фактично будує напрям, перпендикулярний до прямої.'},
+{text:'Відрізок AB має 10 см, M — його середина. Знайди AM.',ans:5,error:'Середина ділить AB на дві рівні частини.',review:'Побудова середини відрізка.',type:'середина',explain:'Позначення M як середини означає AM=MB. Разом ці дві рівні частини утворюють весь AB, тому довжину AB ділять на два.'}
+],
+ 'phy-measure':[
+{text:'3,2 м — це скільки сантиметрів?',ans:320,error:'1 м = 100 см. Перевір, у який бік переводиш одиниці.',review:'Перетворення одиниць довжини.',type:'метри → сантиметри',explain:'Коли переходиш від більшої одиниці довжини до меншої, числове значення збільшується. Один метр містить 100 сантиметрів, тому для такого переходу використовують множення на 100.'},
+{text:'4500 мм — це скільки метрів?',ans:4.5,error:'1000 мм = 1 м. Для переходу до метрів число має зменшитися.',review:'Перехід до більших одиниць.',type:'міліметри → метри',explain:'Міліметр менший за метр. У одному метрі 1000 мм, тому при переході від міліметрів до метрів числове значення ділять на 1000. Перед обчисленням оціни: результат у метрах має бути значно меншим за число в міліметрах.'},
+{text:'2 хв — це скільки секунд?',ans:120,error:'1 хв = 60 с. Перевір множник переходу.',review:'Одиниці часу.',type:'хвилини → секунди',explain:'Час теж має різні одиниці. Одна хвилина містить 60 секунд. Якщо відома кількість хвилин і потрібні секунди, кожну хвилину треба врахувати як 60 секунд.'},
+{text:'0,75 кг — це скільки грамів?',ans:750,error:'1 кг = 1000 г.',review:'Одиниці маси.',type:'кілограми → грами',explain:'Кілограм складається з 1000 грамів. Переходячи до меншої одиниці — грамів — числове значення збільшується у 1000 разів. Десятковий запис кілограмів при цьому не повинен лякати.'},
+{text:'250 см³ — це скільки мілілітрів?',ans:250,error:'1 см³ = 1 мл.',review:'Зв’язок одиниць об’єму.',type:'об’єм',explain:'Для води й лабораторних вимірювань дуже корисна рівність: один кубічний сантиметр об’єму відповідає одному мілілітру. Тому числове значення при такому переході не змінюється.'},
+{text:'На шкалі між 10 см і 11 см є 10 однакових малих поділок. Яка ціна однієї поділки в сантиметрах?',ans:0.1,error:'Різницю між підписаними значеннями поділи на кількість однакових проміжків.',review:'Ціна поділки вимірювального приладу.',type:'ціна поділки',explain:'Ціна поділки показує, яка зміна величини відповідає одному найменшому проміжку шкали. Знайди різницю між двома сусідніми підписаними значеннями й поділи її на кількість рівних проміжків між ними.'}
+],
+'phy-motion':[
+{text:'Тіло пройшло півкола радіусом 8 м. Знайди шлях l при π=3,14.',ans:25.12,error:'Для шляху потрібна довжина дуги півкола, а не пряма між кінцями.',review:'Шлях по дузі та відмінність від переміщення.',type:'шлях по дузі',explain:'Шлях l вимірюють уздовж траєкторії. Для півкола траєкторія є половиною довжини повного кола. Спочатку пригадай формулу довжини кола, а потім врахуй, яку його частину пройдено.'},
+{text:'Тіло пройшло півкола радіусом 8 м. Знайди модуль переміщення s.',ans:16,error:'Переміщення з’єднує початок і кінець найкоротшим прямим відрізком.',review:'Переміщення як пряма між початком і кінцем.',type:'переміщення',explain:'Модуль переміщення s не повторює траєкторію. Він дорівнює довжині прямого відрізка від старту до фінішу. У випадку руху від одного кінця півкола до іншого цей відрізок проходить через центр кола.'},
+{text:'Тіло зробило повне коло радіусом 5 м і повернулося в старт. Знайди модуль переміщення.',ans:0,error:'Порівняй початкову й кінцеву точки, а не довжину пройденої траєкторії.',review:'Шлях може бути ненульовим при нульовому переміщенні.',type:'замкнена траєкторія',explain:'Для переміщення важливі лише початкова й кінцева точки. Якщо після руху тіло повернулося точно туди, звідки почало, відстань між цими двома положеннями дорівнює нулю, хоча шлях був пройдений.'},
+{text:'Учень пройшов 30 м на схід, а потім 10 м назад на захід. Знайди весь шлях l.',ans:40,error:'Шлях — це сума всіх пройдених ділянок незалежно від напряму.',review:'Шлях на прямолінійному маршруті зі зміною напряму.',type:'шлях зі зміною напряму',explain:'Шлях є скалярною величиною: напрям руху не робить пройдену ділянку від’ємною. Якщо тіло рухалось кількома ділянками, для шляху додають довжини всіх ділянок.'},
+{text:'Учень пройшов 30 м на схід, а потім 10 м назад на захід. Знайди модуль переміщення s.',ans:20,error:'Для переміщення врахуй, що друга ділянка частково повертає учня назад.',review:'Переміщення при русі вздовж однієї прямої.',type:'переміщення зі зміною напряму',explain:'На одній прямій протилежні напрями компенсують один одного. Щоб знайти модуль переміщення, визнач, наскільки далеко кінцева точка залишилася від стартової після руху вперед і часткового повернення.'},
+{text:'Тіло рухалося по квадрату зі стороною 6 м і пройшло три його сторони. Знайди шлях l.',ans:18,error:'Потрібна довжина саме трьох пройдених сторін.',review:'Шлях уздовж ламаної траєкторії.',type:'ламана траєкторія',explain:'Коли траєкторія складається з відрізків, шлях дорівнює сумі довжин усіх пройдених відрізків. Форма фігури потрібна, щоб правильно порахувати кількість і довжини ділянок.'}
+],
+'phy-speed':[
+{text:'Тіло пройшло 240 м за 40 с. Знайди швидкість.',ans:6,error:'Швидкість — це шлях, поділений на час.',review:'Формула швидкості.',type:'знайти швидкість',explain:'Швидкість показує, який шлях припадає на одиницю часу. Якщо відомі шлях l і час t, використовуй відношення l до t. Одиниця відповіді тут буде м/с.'},
+{text:'Швидкість 5 м/с, час 12 с. Знайди шлях.',ans:60,error:'Перетвори v=l/t так, щоб невідомим залишився шлях.',review:'Зв’язок l, v і t.',type:'знайти шлях',explain:'Якщо тіло щосекунди проходить однакову кількість метрів, то за кілька секунд весь шлях складається з однакових порцій. Тому шлях знаходять як добуток швидкості на час.'},
+{text:'Шлях 150 м, швидкість 10 м/с. Знайди час.',ans:15,error:'Час показує, скільки секундних ділянок швидкості міститься у всьому шляху.',review:'Знаходження часу.',type:'знайти час',explain:'Щоб визначити час рівномірного руху, з’ясуй, скільки разів шлях, який тіло проходить за одну секунду, міститься у загальному шляху. Це відповідає діленню шляху на швидкість.'},
+{text:'Автомобіль рухається зі швидкістю 72 км/год. Яка це швидкість у м/с?',ans:20,error:'Для переходу км/год → м/с поділи числове значення на 3,6.',review:'Перетворення одиниць швидкості.',type:'км/год → м/с',explain:'Кілометр містить 1000 м, а година — 3600 с. Тому при переході від км/год до м/с виникає відношення 1000/3600, тобто числове значення швидкості зменшується у 3,6 раза.'},
+{text:'Велосипедист проїхав 900 м за 3 хв. Знайди швидкість у м/с.',ans:5,error:'Перед використанням формули переведи хвилини в секунди.',review:'Узгодження одиниць у формулі швидкості.',type:'різні одиниці',explain:'У формулі всі величини мають бути в узгоджених одиницях. Якщо шлях дано в метрах, а швидкість потрібна в м/с, час треба спочатку виразити в секундах, а вже потім ділити шлях на час.'},
+{text:'Пішохід перші 100 м пройшов за 50 с, а наступні 100 м — за 100 с. Знайди середню швидкість за весь шлях у м/с.',ans:1.3333333333,error:'Середню швидкість знаходять за всім шляхом і всім часом, а не як просте середнє двох швидкостей.',review:'Середня швидкість на складеному русі.',type:'середня швидкість',explain:'Для всього маршруту спочатку склади пройдені шляхи, окремо склади витрачений час, а потім поділи загальний шлях на загальний час. Просте середнє окремих швидкостей працює не завжди.'}
+],
+'phy-graph':[
+{text:'За 5 с шлях зріс з 10 м до 60 м. Знайди середню швидкість.',ans:10,error:'На ділянці графіка потрібна зміна шляху, а не кінцеве значення.',review:'Приріст шляху на графіку.',type:'нахил графіка',explain:'На графіку l(t) швидкість на ділянці визначається тим, наскільки змінився шлях за відповідну зміну часу. Від кінцевого значення шляху відніми початкове й співвіднеси приріст із тривалістю ділянки.'},
+{text:'За 3 с шлях зріс з 20 м до 44 м. Знайди середню швидкість.',ans:8,error:'Не використовуй 44 м як весь шлях ділянки — тіло вже мало 20 м на її початку.',review:'Різниця між значенням і приростом.',type:'приріст величини',explain:'Координата точки графіка показує накопичене значення шляху. Для окремого відрізка руху важлива різниця між кінцевим і початковим значеннями, тобто Δl.'},
+{text:'На горизонтальній ділянці графіка l(t) шлях не змінюється 6 с. Яка швидкість?',ans:0,error:'Якщо l не змінюється з часом, приріст шляху дорівнює нулю.',review:'Горизонтальна ділянка графіка руху.',type:'зупинка',explain:'Горизонтальна лінія на графіку шляху означає, що з плином часу значення l залишається тим самим. Отже, за цей проміжок тіло не додає нового шляху.'},
+{text:'На графіку за перші 2 с шлях збільшився від 0 до 12 м. Знайди швидкість на цій ділянці.',ans:6,error:'Візьми приріст шляху за саме ці 2 секунди.',review:'Читання першої ділянки графіка.',type:'перша ділянка',explain:'Для прямої похилої ділянки графіка l(t) при рівномірному русі швидкість стала. Її можна знайти як відношення вертикального приросту шляху до горизонтального приросту часу.'},
+{text:'Дві прямі на графіку l(t) виходять з початку координат. Перша за 4 с досягає 20 м, друга — 40 м. У скільки разів швидкість другої більша?',ans:2,error:'За однаковий час порівняй, у скільки разів відрізняються пройдені шляхи.',review:'Порівняння нахилів графіків.',type:'порівняння швидкостей',explain:'Коли проміжок часу однаковий, більший приріст шляху означає пропорційно більшу швидкість. На графіку це видно як крутіший нахил прямої.'},
+{text:'Шлях на графіку зріс від 30 м у момент 5 с до 70 м у момент 9 с. Знайди швидкість на цій ділянці.',ans:10,error:'Знайди і Δl, і Δt: відніми початкові значення від кінцевих.',review:'Швидкість між двома довільними точками графіка.',type:'дві точки графіка',explain:'Якщо ділянка не починається з нуля, не можна ділити кінцевий шлях на кінцевий час. Для двох точок графіка використовують прирости: Δl та Δt.'}
+],
+'phy-force':[
+{text:'На тіло діють 12 Н вправо і 7 Н вліво. Знайди модуль результуючої сили.',ans:5,error:'Для протилежних напрямів віднімають менший модуль від більшого.',review:'Рівнодійна протилежних сил.',type:'протилежні сили',explain:'Сили мають не лише модуль, а й напрям. Якщо дві сили діють уздовж однієї прямої у протилежні боки, вони частково компенсують одна одну. Модуль рівнодійної визначається різницею модулів.'},
+{text:'Дві сили 4 Н і 6 Н діють вправо. Знайди результуючу.',ans:10,error:'Сили спрямовані однаково, тому їх дія підсилюється.',review:'Додавання співнапрямлених сил.',type:'співнапрямлені сили',explain:'Коли сили діють уздовж однієї прямої в один бік, їх ефекти додаються. Рівнодійна має той самий напрям, а її модуль дорівнює сумі модулів сил.'},
+{text:'На тіло діють 9 Н вправо і 9 Н вліво. Знайди модуль результуючої.',ans:0,error:'Рівні протилежні сили повністю компенсуються.',review:'Зрівноважені сили.',type:'рівновага',explain:'Дві однакові за модулем сили, спрямовані протилежно вздовж однієї прямої, дають нульову рівнодійну. Це називають зрівноваженням сил.'},
+{text:'На тіло діють 15 Н вправо і 9 Н вліво. Якою має бути додаткова сила вліво, щоб рівнодійна стала нульовою?',ans:6,error:'Спочатку визнач незрівноважену частину сил.',review:'Умова рівноваги.',type:'добрати силу',explain:'Для рівноваги сума дій вправо має дорівнювати сумі дій вліво. Спочатку порівняй уже наявні сили й визнач, якої величини не вистачає слабшому напряму.'},
+{text:'Пружину розтягнули силою 3 Н, а потім силою 6 Н. У скільки разів друга сила більша?',ans:2,error:'Порівняй модулі сил діленням більшої на меншу.',review:'Модуль сили.',type:'порівняння сил',explain:'Модуль сили — числова характеристика її величини. Щоб дізнатися, у скільки разів одна сила більша за іншу, використовують відношення їх модулів.'},
+{text:'Тіло вагою 20 Н спокійно лежить на горизонтальній опорі. Який модуль сили реакції опори, якщо вертикальні сили зрівноважені?',ans:20,error:'За рівноваги вертикальні сили мають однакові модулі й протилежні напрями.',review:'Рівновага вертикальних сил.',type:'реакція опори',explain:'Якщо тіло не прискорюється вертикально і на нього діють дві протилежні вертикальні сили, їх модулі повинні бути однаковими. Інакше залишилася б ненульова рівнодійна.'}
+],
+'phy-density':[
+{text:'Маса 360 г, об’єм 120 см³. Знайди густину.',ans:3,error:'Густина — маса одиниці об’єму, тому масу ділять на об’єм.',review:'Формула густини.',type:'знайти густину',explain:'Густина ρ показує, яка маса припадає на одиницю об’єму. Якщо відомі маса m та об’єм V, використовують їх відношення m/V. Одиниці в цій задачі дають г/см³.'},
+{text:'Густина 2 г/см³, об’єм 50 см³. Знайди масу в грамах.',ans:100,error:'Якщо відомі густина й об’єм, масу отримують множенням.',review:'Перетворення формули густини.',type:'знайти масу',explain:'Якщо кожен кубічний сантиметр має певну масу, то для всього об’єму треба скласти цю масу стільки разів, скільки є кубічних сантиметрів. Це відповідає добутку густини на об’єм.'},
+{text:'Маса 500 г, густина 2,5 г/см³. Знайди об’єм.',ans:200,error:'Об’єм показує, скільки одиниць об’єму міститься в заданій масі.',review:'Знаходження об’єму.',type:'знайти об’єм',explain:'З формули густини можна виразити об’єм. За змістом потрібно визначити, скільки порцій маси, що припадає на 1 см³, міститься у всій масі тіла.'},
+{text:'Маса тіла 1,2 кг, об’єм 0,0005 м³. Знайди густину в кг/м³.',ans:2400,error:'Одиниці вже узгоджені: кг і м³. Поділи масу на об’єм.',review:'Густина в одиницях SI.',type:'SI',explain:'У системі SI густину часто виражають у кг/м³. Якщо маса вже в кілограмах, а об’єм у кубічних метрах, додаткового переведення не потрібно — важливо лише правильно застосувати відношення m/V.'},
+{text:'Рівень води в мензурці піднявся зі 140 мл до 190 мл після занурення тіла. Який об’єм тіла в см³?',ans:50,error:'Об’єм тіла дорівнює приросту об’єму води; 1 мл = 1 см³.',review:'Вимірювання об’єму витісненням.',type:'мензурка',explain:'Повністю занурене тіло витісняє об’єм води, рівний власному об’єму. Тому від кінцевого показу мензурки віднімають початковий. Мілілітри тут чисельно дорівнюють кубічним сантиметрам.'},
+{text:'Два тіла мають однаковий об’єм. Маса першого 200 г, другого 600 г. У скільки разів густина другого більша?',ans:3,error:'За однакового об’єму густина прямо пропорційна масі.',review:'Порівняння густин.',type:'порівняння',explain:'Якщо об’єми однакові, знаменник у формулі ρ=m/V для обох тіл однаковий. Тому відношення густин буде таким самим, як відношення їх мас.'}
+],
+'phy-pressure':[
+{text:'Сила 200 Н діє на площу 0,5 м². Знайди тиск.',ans:400,error:'Тиск дорівнює силі, поділеній на площу.',review:'Формула тиску.',type:'знайти тиск',explain:'Тиск p характеризує, яка сила припадає на одиницю площі поверхні. За відомих F і S використовують відношення F/S. Ньютон на квадратний метр — це паскаль.'},
+{text:'Тиск 600 Па діє на площу 0,2 м². Знайди силу.',ans:120,error:'Перетвори p=F/S так, щоб невідомою залишилася сила.',review:'Перетворення формули тиску.',type:'знайти силу',explain:'Якщо відомо, скільки ньютонів припадає на кожен квадратний метр, і відома площа, загальну силу отримують множенням тиску на площу.'},
+{text:'Сила 90 Н створює тиск 300 Па. Знайди площу.',ans:0.3,error:'З p=F/S площа дорівнює F/p.',review:'Знаходження площі.',type:'знайти площу',explain:'Щоб знайти площу з відомих сили й тиску, подумай: на яку площу треба розподілити силу, щоб на кожен квадратний метр припадало задане число ньютонів.'},
+{text:'Однакова сила діє спочатку на площу 2 м², а потім на 1 м². У скільки разів тиск у другому випадку більший?',ans:2,error:'За сталої сили зменшення площі збільшує тиск обернено пропорційно.',review:'Залежність тиску від площі.',type:'якісна залежність',explain:'У формулі p=F/S площа стоїть у знаменнику. Якщо сила не змінюється, менша площа означає більший тиск. Порівняй, у скільки разів змінилася площа.'},
+{text:'Площа опори 250 см². Скільки це м²?',ans:0.025,error:'1 м² = 10000 см², бо площа змінюється за квадратом коефіцієнта довжини.',review:'Перетворення одиниць площі.',type:'см² → м²',explain:'Для площі не можна використовувати коефіцієнт переходу довжини без піднесення до квадрата. Оскільки 1 м = 100 см, то 1 м² містить 100×100 квадратних сантиметрів.'},
+{text:'Сила 500 Н діє на площу 250 см². Знайди тиск у Па.',ans:20000,error:'Спочатку переведи площу з см² у м², а потім застосуй p=F/S.',review:'Тиск з переведенням одиниць площі.',type:'комбінована задача',explain:'Паскаль відповідає Н/м², тому площа у формулі повинна бути в квадратних метрах. Спочатку виконай перетворення площі, а вже після цього діли силу на площу.'}
+],
+'phy-work':[
+{text:'Виконано 900 Дж роботи за 30 с. Знайди потужність.',ans:30,error:'Потужність — робота, виконана за одиницю часу.',review:'Потужність як швидкість виконання роботи.',type:'знайти потужність',explain:'Потужність P показує, скільки роботи виконується за одну секунду. Якщо відомі вся робота A та час t, роботу ділять на час. Джоуль за секунду — це ват.'},
+{text:'Сила 20 Н перемістила тіло на 5 м у напрямі сили. Знайди роботу.',ans:100,error:'У цьому випадку механічна робота дорівнює добутку сили на переміщення.',review:'Механічна робота.',type:'знайти роботу',explain:'Коли сила стала й напрямлена вздовж переміщення, робота визначається тим, наскільки велика сила і на якій відстані вона діяла. Тому ці дві величини перемножують.'},
+{text:'Потужність 50 Вт протягом 8 с. Знайди роботу.',ans:400,error:'Якщо відомі потужність і час, робота дорівнює їх добутку.',review:'Зв’язок роботи, потужності й часу.',type:'робота через потужність',explain:'Якщо машина щосекунди виконує однакову кількість джоулів роботи, за кілька секунд загальна робота накопичується. Тому потужність множать на час.'},
+{text:'Робота 1200 Дж виконана з потужністю 60 Вт. Знайди час у секундах.',ans:20,error:'З P=A/t вирази час.',review:'Знаходження часу за роботою і потужністю.',type:'знайти час',explain:'Потужність говорить, скільки джоулів роботи виконується щосекунди. Щоб дізнатися, скільки секунд потрібно для всієї роботи, визнач, скільки таких секундних порцій міститься у загальній роботі.'},
+{text:'Два механізми виконують однакову роботу. Перший за 10 с, другий за 5 с. У скільки разів потужність другого більша?',ans:2,error:'За однакової роботи менший час означає більшу потужність.',review:'Порівняння потужностей.',type:'порівняння',explain:'У формулі P=A/t робота однакова для обох механізмів. Тому потужність змінюється обернено до часу: хто виконує ту саму роботу швидше, той має більшу потужність.'},
+{text:'Сила 40 Н перемістила тіло на 3 м у напрямі сили за 6 с. Знайди потужність у ватах.',ans:20,error:'Спочатку знайди роботу A=Fs, потім поділи її на час.',review:'Поєднання формул роботи й потужності.',type:'двокрокова задача',explain:'Тут потужність не можна знайти одразу з сили й відстані. Спочатку ці величини дають механічну роботу, а вже потім роботу співвідносять із часом її виконання.'}
+],
+'stem-route':[
+{text:'Маршрут 300 м на схід і 400 м на північ. Знайди модуль переміщення.',ans:500,error:'Переміщення — пряма від старту до фінішу, а не сума ділянок.',review:'Прямокутний трикутник і переміщення.',type:'геометрія → фізика',explain:'Намалюй дві взаємно перпендикулярні ділянки як катети прямокутного трикутника. Переміщення з’єднує старт і фініш, тому геометрично це гіпотенуза.'},
+{text:'Маршрут: 300 м на схід і 400 м на північ. Знайди весь шлях l.',ans:700,error:'Шлях — сума довжин реально пройдених ділянок.',review:'Шлях і траєкторія.',type:'геометрія → фізика',explain:'Для шляху форма маршруту важлива: треба скласти довжини всіх ділянок, якими реально рухався велосипедист. Пряму між стартом і фінішем тут не використовуй.'},
+{text:'Шлях 700 м велосипедист подолав за 140 с. Знайди середню швидкість.',ans:5,error:'Середня швидкість за шляхом визначається відношенням l/t.',review:'Швидкість на складеному маршруті.',type:'фізика → алгебра',explain:'Коли загальний шлях уже знайдений, маршрут можна тимчасово не враховувати. Пов’яжи весь шлях із повним часом формулою швидкості й виконай алгебраїчне ділення.'},
+{text:'Переміщення 1000 м, а шлях 1400 м. На скільки метрів шлях більший?',ans:400,error:'Порівняй дві різні фізичні величини відніманням.',review:'Порівняння шляху і переміщення.',type:'фізика + алгебра',explain:'Шлях і модуль переміщення вимірюються в метрах, тому їх можна порівняти. Щоб знайти, на скільки одна величина більша, від більшої віднімають меншу.'},
+{text:'Велосипедист має проїхати 900 м зі швидкістю 6 м/с. Знайди час у секундах.',ans:150,error:'Перебудуй v=l/t для знаходження часу.',review:'Знаходження часу руху.',type:'алгебра → фізика',explain:'Формула швидкості містить три величини. Якщо відомі шлях і швидкість, ізолюй час: подумай, скільки секундних відрізків по 6 м міститься у всьому шляху.'},
+{text:'Прямокутний маршрут має катети 900 м і 1200 м. Знайди пряме переміщення.',ans:1500,error:'Це масштабований трикутник 3–4–5.',review:'Геометрична модель переміщення.',type:'геометрія + фізика',explain:'Спочатку впізнай прямокутний трикутник. Обидва катети кратні 300, тому можна використати співвідношення 3–4–5 і потім повернути масштаб.'}
+],
+'stem-bridge':[
+{text:'На плані 1 см відповідає 20 м. Міст має 8,5 см. Знайди реальну довжину.',ans:170,error:'Помнож довжину на плані на кількість метрів в одному сантиметрі.',review:'Масштаб і пропорція.',type:'геометрія → алгебра',explain:'Масштаб задає однакову відповідність для кожного сантиметра. Реальна довжина складається з такої кількості однакових 20-метрових частин, скільки сантиметрів має відрізок на плані.'},
+{text:'Реальна довжина дороги 300 м, масштаб 1 см → 25 м. Скільки сантиметрів на плані?',ans:12,error:'Виконай обернену до масштабування дію.',review:'Обернена задача на масштаб.',type:'алгебра + геометрія',explain:'Тепер відома реальна довжина, а шукається кількість сантиметрових частин на плані. Визнач, скільки відрізків по 25 м міститься у 300 м.'},
+{text:'Міст довжиною 180 м пішохід проходить за 120 с. Знайди швидкість.',ans:1.5,error:'Після знаходження реальної довжини використай v=l/t.',review:'Масштаб переходить у фізичний шлях.',type:'геометрія → фізика',explain:'Реальна довжина мосту стає шляхом у фізичній задачі. Коли шлях і час відомі, швидкість показує, скільки метрів проходиться щосекунди.'},
+{text:'На плані міст 9 см. Масштаб 1 см → 20 м. Людина рухається 2 м/с. Скільки секунд триватиме перехід?',ans:90,error:'Спочатку знайди реальну довжину, потім час.',review:'Масштаб + формула руху.',type:'три предмети',explain:'Це двоетапна модель: геометричний масштаб дає реальний шлях, а фізична формула руху — час. Не змішуй сантиметри плану з метрами реального руху.'},
+{text:'Міст 240 м треба зобразити у масштабі 1 см → 30 м. Яка довжина на плані?',ans:8,error:'Поділи реальну довжину на 30 м/см.',review:'Побудова в масштабі.',type:'геометрія + алгебра',explain:'Потрібно зменшити реальний об’єкт до креслення. Один сантиметр представляє 30 метрів, тому знайди кількість таких масштабних одиниць.'},
+{text:'Два мости на одному плані мають 6 см і 9 см. У скільки разів другий довший у реальності?',ans:1.5,error:'Однаковий масштаб скорочується у відношенні.',review:'Відношення довжин при однаковому масштабі.',type:'алгебра + геометрія',explain:'Оскільки масштаб для обох мостів однаковий, множити обидві довжини на той самий коефіцієнт не обов’язково. Відношення реальних довжин дорівнює відношенню довжин на плані.'}
+],
+'stem-lab':[
+{text:'Рівень води зріс зі 100 мл до 145 мл. Маса тіла 90 г. Знайди густину.',ans:2,error:'Об’єм тіла 45 см³, потім застосуй ρ=m/V.',review:'Витіснення води + густина.',type:'експеримент → фізика',explain:'Спочатку вимірювання дає об’єм тіла як приріст рівня води. Оскільки 1 мл = 1 см³, отриманий об’єм можна безпосередньо використати разом із масою у формулі густини.'},
+{text:'Рівень води зріс з 80 мл до 130 мл. Який об’єм тіла в см³?',ans:50,error:'Від кінцевого рівня відніми початковий.',review:'Метод витіснення.',type:'вимірювання',explain:'Мензурка показує загальний об’єм води до і після занурення. Різниця цих показів — саме той об’єм, який витіснило тіло.'},
+{text:'Тіло має густину 2,7 г/см³ та об’єм 40 см³. Знайди масу.',ans:108,error:'Перебудуй ρ=m/V для маси.',review:'Густина, маса та об’єм.',type:'фізика → алгебра',explain:'Густина показує масу одного кубічного сантиметра. Якщо відомо, скільки таких кубічних сантиметрів у тілі, загальну масу отримують множенням густини на об’єм.'},
+{text:'Куб має ребро 3 см. Знайди його об’єм у см³.',ans:27,error:'Об’єм куба дорівнює a³.',review:'Геометричний об’єм.',type:'геометрія',explain:'Куб має три однакові виміри. Його об’єм знаходять множенням довжини, ширини й висоти; для куба це три однакові множники.'},
+{text:'Куб об’ємом 27 см³ має масу 216 г. Знайди густину.',ans:8,error:'Поділи масу на об’єм.',review:'Геометрія переходить у фізику.',type:'геометрія → фізика',explain:'Якщо геометричний об’єм уже відомий, він стає V у фізичній формулі густини. Переконайся, що маса подана в грамах, а об’єм — у кубічних сантиметрах.'},
+{text:'Два тіла однакового об’єму мають густини 2 і 6 г/см³. У скільки разів маса другого більша?',ans:3,error:'За однакового об’єму маса пропорційна густині.',review:'Порівняння за формулою m=ρV.',type:'алгебра + фізика',explain:'В обох тіл однаковий множник V у формулі m=ρV. Тому відношення мас визначається тільки відношенням густин.'}
+],
+'stem-rescue':[
+{text:'Рятувальник проходить 600 м на схід і 800 м на північ. Знайди шлях.',ans:1400,error:'Шлях — сума реально пройдених ділянок.',review:'Довжина ламаної.',type:'геометрія → фізика',explain:'Маршрут складається з двох відрізків ламаної. Фізичний шлях дорівнює геометричній довжині цієї ламаної, тому склади довжини ділянок.'},
+{text:'Для маршруту 600 м і 800 м знайди модуль прямого переміщення.',ans:1000,error:'Переміщення є гіпотенузою прямокутного трикутника.',review:'Прямокутний трикутник.',type:'геометрія + фізика',explain:'Дві взаємно перпендикулярні ділянки — катети. Переміщення ігнорує форму маршруту й напряму з’єднує старт із фінішем.'},
+{text:'Шлях 1400 м пройдено за 700 с. Знайди середню швидкість.',ans:2,error:'Використай увесь шлях і весь час.',review:'Середня швидкість.',type:'фізика + алгебра',explain:'Для середньої швидкості на всьому маршруті бери повний шлях, а не переміщення. Поділи загальну кількість метрів на загальну кількість секунд.'},
+{text:'Прямий шлях до точки 1000 м. Дрон летить 5 м/с. Знайди час прямого польоту.',ans:200,error:'Час дорівнює шляху, поділеному на швидкість.',review:'t=l/v.',type:'алгебра → фізика',explain:'Коли дрон летить прямо, його шлях дорівнює довжині прямого відрізка. Перебудуй формулу швидкості для часу.'},
+{text:'Людина йде ламаним шляхом 1400 м зі швидкістю 2 м/с. Дрон летить прямо 1000 м зі швидкістю 5 м/с. На скільки секунд дрон прибуде раніше?',ans:500,error:'Знайди час кожного окремо, потім порівняй.',review:'Порівняння двох моделей руху.',type:'три предмети',explain:'Спочатку для кожного маршруту окремо визнач час за його шляхом і швидкістю. Лише після цього відніми менший час від більшого.'},
+{text:'Прямий маршрут 1500 м треба подолати за 300 с. Яка мінімальна середня швидкість?',ans:5,error:'Швидкість — шлях за одиницю часу.',review:'Планування руху.',type:'фізика + алгебра',explain:'Тут час заданий як обмеження. Щоб встигнути, треба визначити, скільки метрів у середньому необхідно проходити щосекунди.'}
+],
+'stem-crane':[
+{text:'Кран діє силою 500 Н і піднімає вантаж на 6 м. Знайди роботу.',ans:3000,error:'Робота дорівнює F·s, якщо сила напрямлена вздовж руху.',review:'Механічна робота.',type:'фізика',explain:'Вертикальна висота підйому є переміщенням у напрямі сили. За сталої сили робота накопичується на кожному метрі підйому.'},
+{text:'Кран виконав 3000 Дж роботи за 15 с. Знайди потужність.',ans:200,error:'Поділи роботу на час.',review:'Потужність.',type:'фізика → алгебра',explain:'Потужність показує, скільки джоулів роботи припадає на одну секунду. Загальну роботу розподіли на весь час.'},
+{text:'Висота на кресленні 4 см, масштаб 1 см → 1,5 м. Яка реальна висота?',ans:6,error:'Кожен сантиметр відповідає 1,5 м.',review:'Масштаб висоти.',type:'геометрія → алгебра',explain:'Перед фізичним обчисленням треба відновити реальну геометричну висоту. Масштаб однаково застосовується до кожного сантиметра креслення.'},
+{text:'За реальної висоти 6 м і сили 500 Н знайди роботу.',ans:3000,error:'Після масштабування висота стає переміщенням s.',review:'Масштаб → механічна робота.',type:'геометрія → фізика',explain:'Результат геометричного масштабування тепер має фізичний зміст: це відстань, на якій діє сила. Використай її як s у формулі роботи.'},
+{text:'Кран має потужність 250 Вт і повинен виконати 5000 Дж роботи. Скільки секунд потрібно?',ans:20,error:'Перебудуй P=A/t для часу.',review:'Час роботи механізму.',type:'алгебра + фізика',explain:'Якщо механізм щосекунди виконує 250 Дж роботи, визнач, скільки таких секундних порцій потрібно для всієї роботи.'},
+{text:'Два крани виконують 6000 Дж. Перший за 30 с, другий за 20 с. У скільки разів другий потужніший?',ans:1.5,error:'За однакової роботи порівняй обернені часи.',review:'Порівняння потужностей.',type:'алгебра + фізика',explain:'Оскільки робота однакова, коротший час означає більшу потужність. Можна знайти обидві потужності або одразу порівняти часи обернено.'}
+],
+'stem-water':[
+{text:'Резервуар 2 м × 1 м × 1 м. Знайди об’єм.',ans:2,error:'Перемнож три виміри.',review:'Об’єм прямокутного паралелепіпеда.',type:'геометрія',explain:'Прямокутний резервуар можна моделювати паралелепіпедом. Об’єм дорівнює площі основи, помноженій на висоту, тобто добутку трьох взаємно перпендикулярних вимірів.'},
+{text:'Резервуар 2 м³ заповнений водою густиною 1000 кг/м³. Знайди масу води в кг.',ans:2000,error:'Маса дорівнює ρV.',review:'Густина та маса.',type:'геометрія → фізика',explain:'Геометрія вже дала об’єм. Густина води показує масу одного кубічного метра, тому загальна маса пропорційна кількості кубічних метрів.'},
+{text:'Резервуар має основу 2 м × 1,5 м і висоту води 0,5 м. Знайди об’єм води.',ans:1.5,error:'Спочатку площа основи, потім помнож на висоту.',review:'Площа основи та об’єм.',type:'геометрія + алгебра',explain:'Розбий задачу на два геометричні кроки: знайди площу прямокутної основи, а потім уяви шар води цієї площі й заданої висоти.'},
+{text:'Об’єм води 1,5 м³. Густина 1000 кг/м³. Знайди масу.',ans:1500,error:'Використай m=ρV.',review:'Об’єм переходить у масу.',type:'геометрія → фізика',explain:'Після знаходження об’єму задача стає фізичною. Кожен кубічний метр води має задану масу, тому густину множать на кількість кубічних метрів.'},
+{text:'Насос подає 0,25 м³ води за хвилину. Скільки хвилин потрібно для 2 м³?',ans:8,error:'Поділи потрібний об’єм на об’єм за хвилину.',review:'Швидкість наповнення як відношення.',type:'алгебра + фізична модель',explain:'Це аналог задачі на швидкість: замість метрів за секунду маємо кубічні метри за хвилину. Визнач, скільки однакових порцій по 0,25 м³ міститься у всьому об’ємі.'},
+{text:'Резервуар 2 м³ заповнюють за 8 хв. Який об’єм подається за 1 хвилину?',ans:0.25,error:'Розподіли весь об’єм на весь час.',review:'Середня продуктивність насоса.',type:'алгебра + модель руху',explain:'Продуктивність показує об’єм за одиницю часу так само, як швидкість показує шлях за одиницю часу. Поділи загальний об’єм на кількість хвилин.'}
+]
+};
+const subjectNames={alg:'Алгебра',geo:'Геометрія',phy:'Фізика',stem:'STEM'};
+const KEY='stem7_v2';let state; try{state=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){state=null} state=state||{attempts:0,correct:0,skills:{},errors:{},last:'phy-motion',history:[],streak:0,variants:{},errorTypes:{}}; state.variants=state.variants||{}; state.errorTypes=state.errorTypes||{}; state.reviewDue=state.reviewDue||{}; state.independentWins=state.independentWins||{}; state.completedVariants=state.completedVariants||{};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){} render()}
+function pctFor(s){let a=lessons.filter(x=>x.s===s);return a.length?Math.round(a.reduce((z,x)=>z+(state.skills[x.skill]||0),0)/a.length):0}
+function svg(type){const common=`viewBox="0 0 680 300" role="img" aria-label="Навчальна схема"`;
+if(type==='rescue')return `<svg ${common}><path d="M100 235 L400 235 L400 75" fill="none" stroke="#3156d3" stroke-width="10"/><line x1="100" y1="235" x2="400" y2="75" stroke="#16815d" stroke-width="7" stroke-dasharray="12 9"/><circle cx="100" cy="235" r="9" fill="#172033"/><circle cx="400" cy="75" r="9" fill="#b53b43"/><text x="205" y="270" font-size="20">600 м</text><text x="420" y="165" font-size="20">800 м</text><text x="215" y="145" font-size="20">пряме переміщення</text></svg>`;
+if(type==='crane')return `<svg ${common}><line x1="150" y1="260" x2="150" y2="45" stroke="#172033" stroke-width="12"/><line x1="150" y1="55" x2="500" y2="55" stroke="#3156d3" stroke-width="10"/><line x1="430" y1="55" x2="430" y2="190" stroke="#667085" stroke-width="4"/><rect x="380" y="190" width="100" height="55" rx="8" fill="#eef3ff" stroke="#3156d3" stroke-width="4"/><path d="M520 220 L520 95" stroke="#16815d" stroke-width="6"/><path d="M510 110 L520 90 L530 110" fill="none" stroke="#16815d" stroke-width="6"/><text x="535" y="160" font-size="20">s</text><text x="365" y="285" font-size="20">A = F·s → P = A/t</text></svg>`;
+if(type==='tank')return `<svg ${common}><path d="M180 90 L430 90 L510 145 L260 145 Z M180 90 L180 220 L260 270 L260 145 M260 270 L510 270 L510 145" fill="#eef7ff" fill-opacity=".75" stroke="#3156d3" stroke-width="4"/><path d="M185 165 L430 165 L505 210 L265 210 Z" fill="#9ed7ff" opacity=".75"/><text x="285" y="65" font-size="20">довжина</text><text x="515" y="210" font-size="20">h</text><text x="285" y="295" font-size="20">V = a·b·h</text></svg>`;
+if(type==='circle')return `<svg ${common}><circle cx="260" cy="150" r="100" fill="#eef3ff" stroke="#3156d3" stroke-width="5"/><circle cx="260" cy="150" r="5"/><line x1="160" y1="175" x2="360" y2="175" stroke="#b53b43" stroke-width="5"/><line x1="260" y1="150" x2="360" y2="150" stroke="#16815d" stroke-width="5"/><text x="305" y="138" font-size="22">r</text><text x="240" y="205" font-size="22">d = 2r</text><text x="420" y="130" font-size="28" font-weight="700">C = 2πr</text><text x="420" y="175" font-size="28" font-weight="700">C = πd</text></svg>`;
+if(type==='semicircle')return `<svg ${common}><path d="M150 205 A150 150 0 0 1 450 205" fill="none" stroke="#3156d3" stroke-width="10"/><line x1="150" y1="225" x2="450" y2="225" stroke="#16815d" stroke-width="7"/><circle cx="150" cy="205" r="8"/><circle cx="450" cy="205" r="8"/><text x="240" y="70" font-size="22" fill="#3156d3">шлях l — уздовж дуги</text><text x="245" y="255" font-size="22" fill="#16815d">переміщення s — пряма</text></svg>`;
+if(type==='triangle'||type==='route')return `<svg ${common}><path d="M140 235 L500 235 L500 75 Z" fill="#f2f6ff" stroke="#3156d3" stroke-width="5"/><text x="295" y="265" font-size="20">300 м</text><text x="515" y="165" font-size="20">400 м</text><line x1="140" y1="235" x2="500" y2="75" stroke="#16815d" stroke-width="6" stroke-dasharray="10 8"/><text x="280" y="135" font-size="22">s</text></svg>`;
+if(type==='graph'||type==='motiongraph')return `<svg ${common}><line x1="90" y1="245" x2="610" y2="245" stroke="#172033" stroke-width="3"/><line x1="90" y1="245" x2="90" y2="35" stroke="#172033" stroke-width="3"/><path d="M90 225 L200 190 L320 140 L470 80" fill="none" stroke="#3156d3" stroke-width="7"/><circle cx="320" cy="140" r="7" fill="#16815d"/><text x="600" y="275" font-size="18">t</text><text x="55" y="45" font-size="18">l, y</text><text x="335" y="130" font-size="18">точка графіка</text></svg>`;
+if(type==='parallel')return `<svg ${common}><line x1="90" y1="95" x2="590" y2="95" stroke="#3156d3" stroke-width="6"/><line x1="90" y1="220" x2="590" y2="220" stroke="#3156d3" stroke-width="6"/><line x1="230" y1="25" x2="430" y2="285" stroke="#172033" stroke-width="5"/><path d="M280 95 A40 40 0 0 1 305 130" fill="none" stroke="#b53b43" stroke-width="5"/><path d="M375 220 A40 40 0 0 1 350 185" fill="none" stroke="#b53b43" stroke-width="5"/><text x="300" y="80" font-size="20">57°</text><text x="370" y="250" font-size="20">57°</text></svg>`;
+if(type==='angles'||type==='bisector')return `<svg ${common}><line x1="110" y1="210" x2="570" y2="210" stroke="#172033" stroke-width="5"/><line x1="330" y1="210" x2="440" y2="55" stroke="#3156d3" stroke-width="6"/><path d="M390 210 A60 60 0 0 0 365 160" fill="none" stroke="#16815d" stroke-width="5"/><text x="390" y="170" font-size="22">α</text><text x="235" y="180" font-size="22">180° − α</text></svg>`;
+if(type==='square'||type==='tiles')return `<svg ${common}><rect x="170" y="55" width="190" height="190" fill="#eef3ff" stroke="#3156d3" stroke-width="5"/><line x1="300" y1="55" x2="300" y2="245" stroke="#16815d" stroke-width="4"/><line x1="170" y1="185" x2="360" y2="185" stroke="#16815d" stroke-width="4"/><text x="215" y="130" font-size="24">a²</text><text x="310" y="130" font-size="20">ab</text><text x="215" y="220" font-size="20">ab</text><text x="315" y="220" font-size="20">b²</text><text x="410" y="145" font-size="24">(a+b)²</text></svg>`;
+if(type==='density'||type==='lab')return `<svg ${common}><rect x="180" y="55" width="150" height="200" rx="8" fill="#f8fbff" stroke="#3156d3" stroke-width="4"/><path d="M184 155 H326 V251 H184 Z" fill="#dff3ff"/><rect x="220" y="170" width="70" height="60" rx="8" fill="#7655c5"/><text x="360" y="120" font-size="22">V₁ = 120 мл</text><text x="360" y="160" font-size="22">V₂ = 170 мл</text><text x="360" y="210" font-size="22">m = 135 г</text></svg>`;
+if(type==='force'||type==='pressure'||type==='work')return `<svg ${common}><rect x="270" y="120" width="130" height="90" rx="10" fill="#eef3ff" stroke="#3156d3" stroke-width="4"/><line x1="400" y1="165" x2="570" y2="165" stroke="#16815d" stroke-width="8"/><polygon points="570,165 545,150 545,180" fill="#16815d"/><line x1="270" y1="165" x2="160" y2="165" stroke="#b53b43" stroke-width="6"/><polygon points="160,165 185,150 185,180" fill="#b53b43"/><text x="455" y="145" font-size="20">F₁</text><text x="190" y="145" font-size="20">F₂</text></svg>`;
+if(type==='ruler')return `<svg ${common}><rect x="90" y="120" width="500" height="70" rx="8" fill="#fff6d8" stroke="#a56c0a" stroke-width="3"/>${Array.from({length:21},(_,i)=>`<line x1="${100+i*24}" y1="120" x2="${100+i*24}" y2="${i%5===0?160:145}" stroke="#172033" stroke-width="2"/>`).join('')}<text x="95" y="215" font-size="20">0</text><text x="570" y="215" font-size="20">20 см</text></svg>`;
+if(type==='bridge')return `<svg ${common}><path d="M80 220 Q340 30 600 220" fill="none" stroke="#3156d3" stroke-width="9"/><line x1="80" y1="220" x2="600" y2="220" stroke="#172033" stroke-width="4"/><text x="230" y="265" font-size="22">7,2 см на плані</text><text x="245" y="75" font-size="22">1 см → 25 м</text></svg>`;
+if(type==='speed')return `<svg ${common}><path d="M120 200 H560" stroke="#9aa3b8" stroke-width="4" stroke-dasharray="10 8"/><rect x="270" y="140" width="120" height="55" rx="12" fill="#3156d3"/><circle cx="295" cy="205" r="18" fill="#172033"/><circle cx="365" cy="205" r="18" fill="#172033"/><line x1="400" y1="165" x2="540" y2="165" stroke="#16815d" stroke-width="7"/><polygon points="540,165 515,150 515,180" fill="#16815d"/><text x="430" y="140" font-size="22">v</text></svg>`;
+return `<svg ${common}><circle cx="340" cy="150" r="95" fill="#eef3ff" stroke="#3156d3" stroke-width="5"/><text x="260" y="160" font-size="25">${type==='power'?'a · a · a':type==='congruence'?'△ ≅ △':'Рівновага'}</text></svg>`}
+function taskFor(l){let bank=practiceBanks[l.id]||[l.q];let idx=(state.variants&&state.variants[l.id])||0;return {...bank[idx%bank.length],idx:idx%bank.length,total:bank.length}}
+function taskExplanation(l,t){
+  if(t.explain) return t.explain;
+  const type=t.type||'практика';
+  const review=t.review||l.theory;
+  const guides={
+    'підстановка':'Спочатку заміни кожну букву її числовим значенням. Якщо значення від’ємне — подумки бери його в дужки. Лише після підстановки виконуй дії у звичайному порядку.',
+    'знаки':'Перед обчисленням окремо визнач знак кожного доданка або множника. Мінус перед числом чи змінною є частиною цього значення.',
+    'від’ємні числа':'Від’ємне значення змінної підставляй у дужках. Це допомагає не втратити знак під час множення та додавання.',
+    'поняття степеня':'Показник степеня показує, скільки разів основу беруть множником. Він не означає множення основи на показник.',
+    'знак':'Коли у виразі є мінус, спочатку визнач, до якого числа або члена він належить, і лише потім виконуй перетворення.',
+    'обчислення':'Розклади запис на прості послідовні дії та перевір кожен проміжний результат.',
+    'коефіцієнт':'Коефіцієнт — число перед буквеною частиною. Якщо перед змінною числа немає, її коефіцієнт дорівнює 1.',
+    'подібні доданки':'Об’єднувати можна лише доданки з однаковою буквеною частиною; при цьому змінюються тільки їхні числові коефіцієнти.',
+    'структура формули':'Не розкривай дужки навмання: спочатку впізнай структуру формули й визнач, яку роль має кожен її член.',
+    'застосування формули':'Зістав частини конкретного виразу з a і b у формулі, а потім послідовно обчисли кожний її член.',
+    'знак у формулі':'У квадраті різниці середній член має від’ємний знак. Квадрати крайніх членів при цьому додатні.',
+    'обернені дії':'Мета — залишити невідоме окремо. Виконуй одну й ту саму допустиму дію з обома частинами рівняння.',
+    'зворотна задача':'Якщо відоме значення функції, розглядай формулу як рівняння відносно невідомого аргументу.',
+    'суміжні кути':'Суміжні кути утворюють розгорнутий кут, тому разом мають 180°. Шуканий кут — частина цієї суми.',
+    'вертикальні кути':'Вертикальні кути лежать навпроти один одного при перетині двох прямих і завжди рівні.',
+    'бісектриса':'Бісектриса ділить один кут на дві рівні частини. Тут важливо саме поділити початкову величину кута навпіл.',
+    'відповідні кути':'Коли дві паралельні прямі перетинає січна, відповідні кути мають однакову величину.',
+    'сума 180°':'Внутрішні односторонні кути при паралельних прямих є додатковими: їх сума дорівнює 180°.',
+    'рівність кутів':'Внутрішні різносторонні кути при паралельних прямих рівні; знайди на схемі саме відповідну пару.',
+    'сума кутів':'У будь-якому трикутнику три внутрішні кути разом дорівнюють 180°. Спочатку врахуй усі відомі кути.',
+    'рівнобедрений трикутник':'У рівнобедреному трикутнику кути при основі рівні. Після врахування кута при вершині залишок ділиться порівну.',
+    'прямокутний трикутник':'Один кут прямокутного трикутника вже дорівнює 90°, тому сума двох гострих кутів також дорівнює 90°.',
+    'SSS':'Ознака SSS порівнює три пари відповідних сторін двох трикутників.',
+    'SAS':'Ознака SAS використовує дві відповідні сторони та кут саме між ними.',
+    'ASA':'Ознака ASA використовує одну відповідну сторону та два прилеглі до неї кути.',
+    'радіус і діаметр':'Діаметр проходить через центр кола і складається з двох радіусів.',
+    'довжина кола':'Довжина кола залежить від радіуса: повне коло містить два радіуси в діаметрі, тому використовуй зв’язок C=2πr.',
+    'діаметр':'Якщо діаметр уже відомий, довжину кола можна пов’язати з ним без проміжного знаходження радіуса: C=πd.',
+    'середина':'Середина відрізка утворює дві рівні частини, тому початкова довжина розподіляється порівну.',
+    'побудова секторів':'Повний оберт має 360°. Для рівних секторів цю величину ділять на кількість секторів.',
+    'одиниці':'Перед обчисленням визнач, яка одиниця більша і скільки менших одиниць міститься в одній більшій.',
+    'час':'Одна хвилина містить 60 секунд. При переході від хвилин до секунд кількість збільшується у 60 разів.',
+    'шлях':'Шлях — довжина фактичної траєкторії. Для руху по дузі треба працювати з довжиною відповідної частини кола.',
+    'переміщення':'Модуль переміщення — довжина прямого відрізка між початковою та кінцевою точками, незалежно від форми траєкторії.',
+    'поняття':'Порівняй тільки початкове й кінцеве положення. Якщо вони збігаються, модуль переміщення дорівнює нулю, навіть коли шлях був великим.',
+    'швидкість':'Швидкість показує шлях за одиницю часу. Для рівномірного руху використовуй відношення шляху до часу.',
+    'нахил графіка':'На графіку руху швидкість визначається не кінцевим шляхом, а тим, наскільки змінився шлях за відповідний проміжок часу.',
+    'приріст':'Приріст величини — це кінцеве значення мінус початкове. Для ділянки графіка працюй саме з приростами.',
+    'інтерпретація':'Горизонтальна ділянка графіка l(t) означає, що з часом шлях не збільшується — на цій ділянці руху немає.',
+    'напрям':'Сили мають напрям. Для двох протилежно спрямованих сил результуючий модуль визначається різницею модулів.',
+    'додавання сил':'Якщо сили спрямовані однаково, їх дія підсилюється, тому модулі додаються.',
+    'рівновага':'Однакові за модулем сили протилежних напрямів взаємно компенсуються.',
+    'густина':'Густина показує, яка маса припадає на одиницю об’єму; порівнюй масу саме з відповідним об’ємом.',
+    'маса':'Із співвідношення густини, маси та об’єму масу можна знайти як добуток густини на об’єм.',
+    'об’єм':'Щоб знайти об’єм із відомих маси й густини, масу треба поділити на густину.',
+    'тиск':'Тиск показує, яка сила припадає на одиницю площі, тому силу ділять на площу.',
+    'сила':'Якщо відомі тиск і площа, сила відновлюється множенням цих величин.',
+    'площа':'Якщо відомі сила й тиск, площу знаходять із того самого співвідношення, ізолюючи S.',
+    'потужність':'Потужність показує, яку роботу виконують за одиницю часу.',
+    'робота':'Коли сила напрямлена вздовж переміщення, механічна робота дорівнює добутку сили на переміщення.',
+    'зв’язок величин':'Формулу потужності можна перебудувати залежно від того, яку з трьох величин потрібно знайти.',
+    'геометрія + фізика':'Маршрут утворює прямокутний трикутник: шлях і переміщення — різні геометричні об’єкти. Для переміщення потрібна пряма від старту до фінішу.',
+    'алгебра + фізика':'Спочатку визнач фізичний зв’язок між величинами, а потім використай алгебру для знаходження невідомої.',
+    'масштаб':'Масштаб задає відповідність між довжиною на плані та реальною довжиною. Однакова відповідність діє на весь рисунок.',
+    'обернена пропорція':'Коли реальна довжина відома, а треба знайти довжину на плані, виконуй обернену до масштабування дію.',
+    'знаходження масштабу':'Щоб знайти, скільки реальних метрів припадає на 1 см плану, розподіли реальну довжину на кількість сантиметрів.',
+    'експеримент':'У методі витіснення об’єм тіла дорівнює приросту рівня води. Лише після цього використовуй знайдений об’єм у формулі густини.',
+    'вимірювання об’єму':'Різниця між кінцевим і початковим рівнями води показує об’єм зануреного тіла; 1 мл відповідає 1 см³.',
+    'модель експерименту':'Пов’яжи виміряні величини формулою густини та перебудуй її для тієї величини, яку потрібно знайти.'
+  };
+  return guides[type] || (review+' Перед обчисленням визнач, які величини відомі, що треба знайти і який зв’язок між ними застосовується.');
+}
+function lessonHTML(l){let t=taskFor(l);return `<section class="card lesson active"><div class="toc-tag">${subjectNames[l.s]} · ${l.skill}</div><h1>${l.title}</h1><div class="step-strip"><div class="now">1 · Зрозумій</div><div>2 · Спробуй</div><div>3 · Розбери помилку</div><div>4 · Закріпи</div></div><div class="hero"><h3>Зрозумій і побач</h3><p>${l.theory}</p><div class="formula">${l.formula}</div><div class="microgrid"><div class="microcard"><b>Що треба зрозуміти</b>${l.skill}</div><div class="microcard"><b>Не зубри</b>Спробуй пояснити зв’язок своїми словами.</div><div class="microcard"><b>Критерій</b>Правило вважається засвоєним лише після самостійної нової задачі.</div></div></div><div class="visual">${svg(l.visual)}<div class="caption">Схема є частиною пояснення. Простеж зв’язок між величинами й фігурами, а не запам’ятовуй картинку механічно.</div></div><div class="task-explain"><div class="toc-tag">Пояснення саме до цієї задачі</div><p>${taskExplanation(l,t)}</p><div class="concept"><b>Пов’язана частина матеріалу:</b> ${t.review}</div><p class="small">Тут пояснюється принцип, потрібний для цієї задачі, але не її готовий розв’язок.</p></div><div class="q" data-skill="${l.skill}"><div class="practice-head"><h3>Спробуй самостійно</h3><span class="progress-chip">Задача ${t.idx+1} з ${t.total}</span></div><span class="pill">${t.type||'практика'}</span><p>${t.text}</p><div class="answer-row"><input inputmode="decimal" placeholder="Відповідь"><button type="button" class="minus-btn secondary" onclick="insertMinus(this)" aria-label="Ввести мінус">−</button><button onclick="checkAnswer(this,'${l.id}',${t.ans})">Перевірити</button></div><div class="feedback"></div><div class="review"></div></div><div class="review-panel" id="reviewPanel"><h3>Коротке повторення</h3><p>${l.theory}</p><div class="concept"><b>Ключовий зв’язок:</b> ${l.formula}</div><p class="small">Після повторення закрий цей блок і розв’яжи задачу самостійно. Готового розв’язку тут немає.</p><button class="secondary" onclick="document.getElementById('reviewPanel').classList.remove('show')">Повернутися до задачі</button></div><div class="challenge"><b>Навіщо ця тема?</b><p class="small">Після кількох правильних самостійних спроб навичка переходить у стійке засвоєння. Помилка не приховується: система фіксує її тип і повертає тему на повторення.</p></div><div class="lesson-nav"><button class="secondary" onclick="repeatTheory('${l.id}')">Повторити вивчене</button><div class="actions"><button class="ghost" onclick="newVariant('${l.id}')">Інша задача</button><button class="ghost" onclick="nextLesson('${l.id}')">Наступна тема</button></div></div></section>`}
+function openLesson(id){let l=lessons.find(x=>x.id===id);if(!l)return;state.last=id;save();home.classList.add('hidden');parent.classList.remove('show');course.classList.remove('hidden');lessonArea.innerHTML=lessonHTML(l);moduleList.innerHTML=lessons.map(x=>`<button class="module-btn ${x.id===id?'active':''}" onclick="openLesson('${x.id}')"><span class="toc-tag">${subjectNames[x.s]}</span><br>${x.title}</button>`).join('');window.scrollTo({top:0,behavior:'smooth'})}
+function insertMinus(btn){let inp=btn.closest('.answer-row').querySelector('input');let v=inp.value||'';if(v.startsWith('-'))inp.value=v.slice(1);else inp.value='-'+v;inp.focus()}
+function checkAnswer(btn,id,ans){let l=lessons.find(x=>x.id===id),t=taskFor(l),q=btn.closest('.q'),inp=q.querySelector('input'),v=parseFloat(inp.value.replace(',','.')),fb=q.querySelector('.feedback'),rv=q.querySelector('.review');state.attempts++;let ok=Number.isFinite(v)&&Math.abs(v-ans)<Math.max(.011,Math.abs(ans)*.0001);if(ok){state.correct++;state.independentWins[l.skill]=(state.independentWins[l.skill]||0)+1;state.completedVariants[id]=state.completedVariants[id]||[];let key=String(t.idx);let isNew=!state.completedVariants[id].includes(key);if(isNew)state.completedVariants[id].push(key);let total=(practiceBanks[id]||[l.q]).length,done=state.completedVariants[id].length;state.skills[l.skill]=Math.round(Math.min(1,done/total)*100);scheduleReview(l.skill,true);fb.className='feedback ok';if(done>=total){fb.innerHTML='✓ Правильно. <b>Тему пройдено: '+done+' з '+total+' різних задач виконано самостійно.</b><div class="topic-complete">100% — можна переходити до наступної теми. Повторне розв’язання цих самих задач більше не збільшує прогрес.</div>'}else{fb.innerHTML='✓ Правильно. Самостійна спроба зарахована. Пройдено '+done+' з '+total+' різних задач цієї теми.'}rv.style.display='none';state.history.push({id,ok:true,type:t.type||'practice',variant:t.idx,t:Date.now()})}else{state.errors[l.skill]=(state.errors[l.skill]||0)+1;scheduleReview(l.skill,false);state.errorTypes=state.errorTypes||{};state.reviewDue=state.reviewDue||{};state.independentWins=state.independentWins||{};state.errorTypes[t.type||'practice']=(state.errorTypes[t.type||'practice']||0)+1;fb.className='feedback bad';fb.innerHTML='<span class="badge-error">'+(t.type||'помилка')+'</span><br>✗ <b>Розбір помилки:</b> '+t.error;rv.style.display='block';rv.innerHTML='<b>Що повторити:</b> '+t.review+'<div class="repeatbox">Готового розв’язку не буде. Повтори потрібне правило, повернися сюди та виправ відповідь самостійно.</div>';state.history.push({id,ok:false,type:t.type||'practice',variant:t.idx,t:Date.now()})}save()}
+function repeatTheory(id){let p=document.getElementById('reviewPanel');if(p){p.classList.add('show');p.scrollIntoView({behavior:'smooth',block:'center'})}}
+function newVariant(id){state.variants=state.variants||{};state.completedVariants=state.completedVariants||{};let l=lessons.find(x=>x.id===id),n=(practiceBanks[id]||[l.q]).length,done=state.completedVariants[id]||[],cur=(state.variants[id]||0)%n,next=-1;for(let k=1;k<=n;k++){let cand=(cur+k)%n;if(!done.includes(String(cand))){next=cand;break}}if(next<0)next=(cur+1)%n;state.variants[id]=next;save();openLesson(id)}
+function nextLesson(id){let i=lessons.findIndex(x=>x.id===id);openLesson(lessons[(i+1)%lessons.length].id)}function showHome(){course.classList.add('hidden');parent.classList.remove('show');home.classList.remove('hidden');render();window.scrollTo({top:0,behavior:'smooth'})}function toggleParent(){home.classList.add('hidden');course.classList.add('hidden');parent.classList.add('show');render();window.scrollTo({top:0,behavior:'smooth'})}function openFirst(s){openLesson(lessons.find(x=>x.s===s).id)}function continueLearning(){openLesson(state.last||'phy-motion')}function openWeakest(){let arr=lessons.filter(x=>x.s!=='stem').sort((a,b)=>(state.skills[a.skill]||0)-(state.skills[b.skill]||0));openLesson(arr[0].id)}
+function scheduleReview(skill,ok){
+ let wins=state.independentWins[skill]||0;
+ let delay=ok?(wins>=4?14:wins>=2?7:3):1;
+ state.reviewDue[skill]=Date.now()+delay*86400000;
+}
+function dueSkills(){
+ let now=Date.now();
+ return Object.keys(state.reviewDue||{}).filter(k=>state.reviewDue[k]<=now).sort((a,b)=>state.reviewDue[a]-state.reviewDue[b]);
+}
+function lessonBySkill(skill){return lessons.find(x=>x.skill===skill)}
+function startReviewSession(){let due=dueSkills(); if(due.length){let l=lessonBySkill(due[0]); if(l) return openLesson(l.id)} openWeakest()}
+function renderReviewQueue(){let box=$('reviewQueue'); if(!box)return; let due=dueSkills(); let weak=Object.entries(state.errors||{}).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]); let picks=[]; due.forEach(k=>{if(!picks.includes(k))picks.push(k)}); weak.forEach(([k])=>{if(!picks.includes(k)&&picks.length<4)picks.push(k)}); box.innerHTML=picks.slice(0,4).map(k=>{let l=lessonBySkill(k),isDue=due.includes(k); if(!l)return ''; return `<div class="review-item ${isDue?'due':''}"><div><strong>${k}</strong><span class="small">${isDue?'Час перевірити без підказок':'Є помилки — варто повернутися'}</span></div><button class="ghost" onclick="openLesson('${l.id}')">Повторити</button></div>`}).join('') || '<div class="small">Черга сформується після практики.</div>'}
+function render(){let subjects=['alg','geo','phy'];subjects.forEach(s=>{let p=pctFor(s);document.getElementById(s+'Bar').style.width=p+'%';document.getElementById(s+'Pct').textContent=p+'% засвоєння'});let all=lessons.filter(x=>x.s!=='stem'),overall=Math.round(all.reduce((z,x)=>z+(state.skills[x.skill]||0),0)/all.length);$('overallBar').style.width=overall+'%';$('overallText').textContent=overall+'% карти знань опрацьовано';let last=lessons.find(x=>x.id===state.last);$('continueName').textContent=last?last.title:'Почнімо навчання';let weak=Object.entries(state.errors).filter(x=>x[1]>0).length,due=dueSkills().length;$('reviewCount').textContent=due?`На сьогодні заплановано ${due} повторень.`:weak?`Є ${weak} навичок із помилками — система поверне їх на повторення.`:'Після перших задач тут з’явиться персональне повторення.';renderReviewQueue();$('yearMap').innerHTML=['alg','geo','phy'].map(s=>`<div class="mapcol"><b>${subjectNames[s]}</b>${lessons.filter(x=>x.s===s).map(x=>`<div class="node ${(state.skills[x.skill]||0)>=80?'done':(state.errors[x.skill]||0)>1?'weak':''}" onclick="openLesson('${x.id}')">${x.title}<br><span class="small">${state.skills[x.skill]||0}% mastery</span></div>`).join('')}</div>`).join('');$('pAttempts').textContent=state.attempts;$('pCorrect').textContent=state.correct;$('pAccuracy').textContent=(state.attempts?Math.round(state.correct/state.attempts*100):0)+'%';$('pTopics').textContent=Object.values(state.skills).filter(x=>x>=80).length;let skills=[...new Set(lessons.map(x=>x.skill))];$('mastery').innerHTML=skills.map(k=>`<div class="mastery-row"><span>${k}</span><div class="bar"><i style="width:${state.skills[k]||0}%"></i></div><b>${state.skills[k]||0}%</b></div>`).join('');$('errorMap').innerHTML=skills.map(k=>`<div class="mastery-row"><span>${k}</span><div class="bar"><i style="width:${Math.min(100,(state.errors[k]||0)*15)}%;background:var(--red)"></i></div><b>${state.errors[k]||0}</b></div>`).join('') + (Object.keys(state.errorTypes||{}).length?'<hr><h4>Типи помилок</h4>'+Object.entries(state.errorTypes).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="small" style="margin:7px 0">${k}: <b>${v}</b></div>`).join(''):'')}
+function exportProgress(){let b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='stem7-progress.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}function importProgress(){let i=document.createElement('input');i.type='file';i.accept='.json';i.onchange=()=>{let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();alert('Прогрес імпортовано.')}catch(e){alert('Не вдалося прочитати файл.')}};r.readAsText(i.files[0])};i.click()}function resetProgress(){if(confirm('Скинути весь прогрес на цьому пристрої?')){try{localStorage.removeItem(KEY)}catch(e){} location.reload()}}try{render()}catch(e){
+ document.getElementById('home').innerHTML='<div class="card"><h2>Помилка запуску</h2><p>Застосунок не зміг запуститися у цьому браузері.</p><p class="small">'+String(e.message||e)+'</p></div>';
+}
+
+const YEAR_PHASES = [{"name": "1. Математичний інструментарій", "desc": "Спочатку формуємо мову, без якої далі важко працювати у фізиці та геометрії.", "ids": ["alg-expr", "alg-power", "alg-poly", "alg-equation"]}, {"name": "2. Геометрична мова та вимірювання", "desc": "Кути, прямі, трикутники й базові вимірювання стають інструментами для моделей.", "ids": ["geo-angle", "geo-triangle"]}, {"name": "3. Рух як перший міжпредметний міст", "desc": "Функції й графіки з алгебри поєднуються з геометрією траєкторії та фізикою руху.", "ids": ["alg-function", "stem-route"]}, {"name": "4. Рівності, коло та сили", "desc": "Поглиблюємо доказове мислення й переносимо його у фізичні моделі.", "ids": ["geo-congruence", "geo-circle"]}, {"name": "5. Алгебраїчне перетворення моделей", "desc": "Формули, множники та системи потрібні для складніших багатокрокових задач.", "ids": ["alg-formulas", "alg-monomial", "alg-factor"]}, {"name": "6. Речовина, тиск і робота", "desc": "Геометричні величини переходять у фізичні: об’єм, площа, переміщення.", "ids": ["stem-lab", "stem-crane"]}, {"name": "7. Побудови та практичні моделі", "desc": "Застосовуємо масштаб, побудови, об’єм і рух у реальних сценаріях.", "ids": ["stem-bridge", "stem-water"]}, {"name": "8. Фінальна інтеграція", "desc": "Дитина самостійно обирає інструменти з усіх трьох предметів.", "ids": ["stem-rescue"]}];
+const YEAR_PREREQ = {"alg-expr": [], "alg-power": ["alg-expr"], "alg-poly": ["alg-power"], "alg-equation": ["alg-poly"], "geo-angle": ["alg-equation"], "geo-triangle": ["geo-angle"], "alg-function": ["geo-triangle"], "stem-route": ["geo-triangle", "alg-function"], "geo-congruence": ["stem-route"], "geo-circle": ["geo-congruence"], "alg-formulas": ["geo-circle"], "alg-monomial": ["alg-formulas"], "alg-factor": ["alg-monomial"], "stem-lab": [], "stem-crane": [], "stem-bridge": [], "stem-water": ["alg-equation"], "stem-rescue": ["stem-route", "geo-triangle"]};
+function allViewsOff(){
+  document.querySelectorAll('.view').forEach(v=>v.style.display='none');
+}
+function taskTotal(id){ return (practiceBanks[id]||[]).length || 1; }
+function taskDoneCount(id){
+  const a=(progress.completedTasks&&progress.completedTasks[id])||[];
+  return new Set(a).size;
+}
+function modulePct(id){ return Math.min(100,Math.round(taskDoneCount(id)/taskTotal(id)*100)); }
+function moduleDone(id){ return modulePct(id)>=100; }
+function prereqsMet(id){ return (YEAR_PREREQ[id]||[]).every(moduleDone); }
+function subjectLabel(s){return ({alg:'Алгебра',geo:'Геометрія',phys:'Фізика',stem:'STEM'})[s]||s}
+function findLesson(id){return lessons.find(x=>x.id===id)}
+function routeStatus(id){
+  if(moduleDone(id))return 'done';
+  if(prereqsMet(id))return 'current';
+  return 'locked';
+}
+function openYearPath(){
+  allViewsOff();
+  const v=document.getElementById('yearPathView'); if(!v)return;
+  v.style.display='block';
+  let h='';
+  YEAR_PHASES.forEach((p,pi)=>{
+    h+=`<div class="path-phase"><h3>${p.name}</h3><div class="muted">${p.desc}</div><div class="path-grid">`;
+    p.ids.forEach(id=>{
+      const l=findLesson(id); if(!l)return;
+      const st=routeStatus(id), pct=modulePct(id);
+      const req=(YEAR_PREREQ[id]||[]).map(x=>findLesson(x)?.title).filter(Boolean);
+      h+=`<div class="path-node ${st}">
+        <div class="tag">${subjectLabel(l.s)} · ${pct}%</div>
+        <b>${l.title}</b>
+        <div class="progress"><span style="width:${pct}%"></span></div>
+        ${st==='locked'?`<div class="gate">🔒 Спочатку: ${req.join(' · ')}</div>`:''}
+        ${st!=='locked'?`<button onclick="openLesson('${id}')">${pct? 'Продовжити':'Почати'}</button>`:''}
+      </div>`;
+    });
+    h+='</div></div>';
+  });
+  document.getElementById('yearPathContent').innerHTML=h;
+  window.scrollTo(0,0);
+}
+function nextRecommended(){
+  for(const p of YEAR_PHASES) for(const id of p.ids) if(!moduleDone(id)&&prereqsMet(id)) return id;
+  return null;
+}
+function dueWeakModules(){
+  const arr=[];
+  for(const l of lessons){
+    const e=(progress.errors&&progress.errors[l.id])||0;
+    if(e>0 && !moduleDone(l.id))arr.push({id:l.id,e});
+  }
+  return arr.sort((a,b)=>b.e-a.e).slice(0,2);
+}
+function openTodayPlan(){
+  allViewsOff();
+  const v=document.getElementById('todayPlanView'); if(!v)return;
+  v.style.display='block';
+  const next=nextRecommended();
+  const weak=dueWeakModules();
+  let cards='';
+  if(next){
+    const l=findLesson(next);
+    cards+=`<div class="today-card"><b>1. Основний урок</b><h3>${l.title}</h3><div class="muted">${subjectLabel(l.s)} · продовжує твій маршрут</div><button onclick="openLesson('${next}')">Почати</button></div>`;
+  }
+  weak.forEach((w,i)=>{
+    const l=findLesson(w.id);
+    cards+=`<div class="today-card"><b>${i+2}. Повторення слабкого місця</b><h3>${l.title}</h3><div class="muted">Помилок у цій темі: ${w.e}. Спочатку повтори матеріал, потім виконай нову задачу.</div><button class="secondary" onclick="openLesson('${w.id}')">Повторити</button></div>`;
+  });
+  if(!cards)cards=`<div class="today-card"><h3>Маршрут завершено 🎉</h3><div class="muted">Усі доступні модулі пройдені. Можна працювати з повторенням і STEM-місіями.</div></div>`;
+  document.getElementById('todayPlanContent').innerHTML=cards;
+  window.scrollTo(0,0);
+}
+
+/* v14 mastery layer: diagnostic -> review -> fresh independent task -> spaced revisit */
+function ensureMasteryState(){
+  if(!progress.mastery) progress.mastery={};
+  if(!progress.masteryHistory) progress.masteryHistory=[];
+}
+function masteryRec(id){
+  ensureMasteryState();
+  if(!progress.mastery[id]) progress.mastery[id]={stage:'diagnostic',wrong:0,correctIndependent:0,lastWrongAt:0,lastCorrectAt:0,nextReviewAt:0};
+  return progress.mastery[id];
+}
+function masteryLabel(stage){
+  return ({diagnostic:'Діагностика',review:'Повторення теорії',fresh:'Нова аналогічна задача',control:'Контроль без допомоги',mastered:'Засвоєно'})[stage]||stage;
+}
+function updateMasteryBox(id){
+  const box=document.getElementById('masteryBox'); if(!box)return;
+  const r=masteryRec(id);
+  box.style.display='block';
+  const due=r.nextReviewAt && Date.now()>=r.nextReviewAt;
+  box.innerHTML=`<b>Цикл засвоєння: ${masteryLabel(r.stage)}</b>
+  <div class="mastery-row">
+    <span class="mastery-chip ${r.wrong?'warn':'ok'}">помилок: ${r.wrong}</span>
+    <span class="mastery-chip ok">самостійних правильних: ${r.correctIndependent}</span>
+    ${r.nextReviewAt?`<span class="mastery-chip ${due?'warn':''}">${due?'час повторити':'повторення заплановано'}</span>`:''}
+  </div>
+  <div class="muted" style="margin-top:7px">${r.stage==='review'?'Повернись до пояснення потрібної навички. Потім виконай іншу задачу самостійно.':r.stage==='fresh'?'Виправлення старої відповіді ще не означає засвоєння. Потрібна нова аналогічна задача.':r.stage==='control'?'Тепер контрольна задача без підказки розв’язку.':r.stage==='mastered'?'Навичка підтверджена. Система поверне її на інтервальне повторення.':'Спробуй задачу самостійно. Помилка використовується для вибору матеріалу на повторення.'}</div>`;
+}
+function recordMasteryAttempt(id,wasCorrect,variantIndex){
+  const r=masteryRec(id), now=Date.now();
+  if(!wasCorrect){
+    r.wrong++; r.lastWrongAt=now; r.stage='review';
+    r.correctIndependent=0;
+    r.nextReviewAt=now+24*60*60*1000;
+  }else{
+    // Correct after a wrong answer is treated as recovery, not mastery.
+    if(r.stage==='review'){ r.stage='fresh'; }
+    else if(r.stage==='fresh'){ r.correctIndependent=1; r.stage='control'; }
+    else if(r.stage==='control'){ r.correctIndependent=2; r.stage='mastered'; r.lastCorrectAt=now; r.nextReviewAt=now+3*24*60*60*1000; }
+    else if(r.stage==='diagnostic'){ r.correctIndependent=Math.max(1,r.correctIndependent); r.stage='control'; }
+    else if(r.stage==='mastered'){ r.lastCorrectAt=now; r.nextReviewAt=now+7*24*60*60*1000; }
+  }
+  progress.masteryHistory.push({id,ok:!!wasCorrect,variant:variantIndex,at:now,stage:r.stage});
+  if(progress.masteryHistory.length>500)progress.masteryHistory=progress.masteryHistory.slice(-500);
+  try{save()}catch(e){try{localStorage.setItem('stem7_v2',JSON.stringify(progress))}catch(_){}}
+  updateMasteryBox(id);
+}
+function resetProgress(){
+  if(!confirm('Скинути ВЕСЬ прогрес навчання? Будуть видалені виконані задачі, помилки, слабкі місця, маршрут і дані засвоєння. Цю дію не можна скасувати.'))return;
+  if(!confirm('Підтверди ще раз: почати курс повністю з нуля?'))return;
+  try{
+    localStorage.removeItem('stem7_v2');
+    // remove only app-related legacy keys, if present
+    Object.keys(localStorage).filter(k=>/^stem7_/i.test(k)).forEach(k=>localStorage.removeItem(k));
+  }catch(e){}
+  location.reload();
+}
+
+const _v14_checkAnswer = checkAnswer;
+checkAnswer = function(btn){
+  const lesson = (typeof currentLesson!=='undefined' && currentLesson) ? currentLesson : (typeof state!=='undefined' && state.currentLesson ? findLesson(state.currentLesson) : null);
+  const id = lesson && lesson.id ? lesson.id : ((typeof state!=='undefined'&&state.lastLesson)||null);
+  const beforeWrong = id && progress.errors ? (progress.errors[id]||0) : 0;
+  const beforeDone = id ? taskDoneCount(id) : 0;
+  const out = _v14_checkAnswer.apply(this,arguments);
+  if(id){
+    const afterWrong = progress.errors ? (progress.errors[id]||0) : 0;
+    const afterDone = taskDoneCount(id);
+    const ok = afterDone>beforeDone || afterWrong===beforeWrong;
+    recordMasteryAttempt(id,ok,(typeof state!=='undefined'&&state.variants)?state.variants[id]:null);
+  }
+  return out;
+};
+const _v14_openLesson = openLesson;
+openLesson = function(id){
+  const out=_v14_openLesson.apply(this,arguments);
+  setTimeout(()=>updateMasteryBox(id),0);
+  return out;
+};
+</script>
+</body></html>
