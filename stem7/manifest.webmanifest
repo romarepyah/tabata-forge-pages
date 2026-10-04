@@ -1,0 +1,19 @@
+{
+  "name": "STEM 7 — навчальний курс",
+  "short_name": "STEM 7",
+  "description": "Алгебра, геометрія, фізика та STEM для 7 класу",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#3156d3",
+  "lang": "uk",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
