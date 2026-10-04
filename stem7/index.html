@@ -487,14 +487,14 @@ function exportProgress(){let b=new Blob([JSON.stringify(state,null,2)],{type:'a
 }
 
 const YEAR_PHASES = [{"name":"1. Математичний інструментарій","desc":"Вирази, степені, многочлени та рівняння — базова мова курсу.","ids":["alg-expr","alg-power","alg-poly","alg-equation"]},{"name":"2. Геометрична мова та вимірювання","desc":"Кути, паралельні прямі, трикутники та вимірювання.","ids":["geo-angle","geo-parallel","geo-triangle","phy-measure"]},{"name":"3. Рух, функції та графіки","desc":"Алгебраїчні залежності поєднуємо з фізикою руху.","ids":["alg-function","phy-motion","phy-speed","phy-graph","stem-route"]},{"name":"4. Перетворення виразів і доведення","desc":"Формули, одночлени, множення, розкладання та геометрична рівність.","ids":["alg-formulas","alg-monomial","alg-multiply","alg-factor","geo-congruence"]},{"name":"5. Коло, побудови та системи","desc":"Поглиблюємо геометричне й алгебраїчне моделювання.","ids":["geo-circle","geo-build","alg-system","stem-bridge"]},{"name":"6. Сили та властивості речовини","desc":"Сила, густина й лабораторні вимірювання переходять у практичні моделі.","ids":["phy-force","phy-density","stem-lab"]},{"name":"7. Тиск, робота та інженерні задачі","desc":"Фізичні величини застосовуємо в багатокрокових STEM-сценаріях.","ids":["phy-pressure","phy-work","stem-crane","stem-water"]},{"name":"8. Фінальна інтеграція","desc":"Самостійно обираємо потрібні інструменти з алгебри, геометрії та фізики.","ids":["stem-rescue"]}];
-const YEAR_PREREQ = {"alg-expr": [], "alg-power": ["alg-expr"], "alg-poly": ["alg-power"], "alg-equation": ["alg-poly"], "geo-angle": ["alg-equation"], "geo-triangle": ["geo-angle"], "alg-function": ["geo-triangle"], "stem-route": ["geo-triangle", "alg-function"], "geo-congruence": ["stem-route"], "geo-circle": ["geo-congruence"], "alg-formulas": ["geo-circle"], "alg-monomial": ["alg-formulas"], "alg-factor": ["alg-monomial"], "stem-lab": [], "stem-crane": [], "stem-bridge": [], "stem-water": ["alg-equation"], "stem-rescue": ["stem-route", "geo-triangle"]};
+const YEAR_PREREQ = {"alg-expr":[],"alg-power":["alg-expr"],"alg-poly":["alg-expr"],"alg-equation":["alg-expr"],"geo-angle":[],"geo-parallel":["geo-angle"],"geo-triangle":["geo-angle"],"phy-measure":[],"alg-function":["alg-equation"],"phy-motion":["phy-measure"],"phy-speed":["phy-motion"],"phy-graph":["phy-speed"],"stem-route":["phy-speed","geo-triangle"],"alg-formulas":["alg-poly"],"alg-monomial":["alg-power"],"alg-multiply":["alg-monomial"],"alg-factor":["alg-multiply"],"geo-congruence":["geo-triangle"],"geo-circle":["geo-angle"],"geo-build":["geo-angle"],"alg-system":["alg-equation"],"stem-bridge":["geo-triangle"],"phy-force":["phy-measure"],"phy-density":["phy-measure"],"stem-lab":["phy-density"],"phy-pressure":["phy-force"],"phy-work":["phy-force"],"stem-crane":["phy-work"],"stem-water":["phy-density"],"stem-rescue":["stem-route"]};
 function allViewsOff(){
   document.querySelectorAll('.view').forEach(v=>v.style.display='none');
 }
 function taskTotal(id){ return (practiceBanks[id]||[]).length || 1; }
 function taskDoneCount(id){
-  const a=(progress.completedTasks&&progress.completedTasks[id])||[];
-  return new Set(a).size;
+  const a=(state.completedVariants&&state.completedVariants[id])||[];
+  return new Set(a.map(String)).size;
 }
 function modulePct(id){ return Math.min(100,Math.round(taskDoneCount(id)/taskTotal(id)*100)); }
 function moduleDone(id){ return modulePct(id)>=100; }
@@ -537,7 +537,7 @@ function nextRecommended(){
 function dueWeakModules(){
   const arr=[];
   for(const l of lessons){
-    const e=(progress.errors&&progress.errors[l.id])||0;
+    const e=(state.errors&&state.errors[l.skill])||0;
     if(e>0 && !moduleDone(l.id))arr.push({id:l.id,e});
   }
   return arr.sort((a,b)=>b.e-a.e).slice(0,2);
@@ -562,80 +562,58 @@ function openTodayPlan(){
   window.scrollTo(0,0);
 }
 
-/* v14 mastery layer: diagnostic -> review -> fresh independent task -> spaced revisit */
+/* mastery layer — stored inside the existing stem7_v2 state, so old learner history is preserved */
 function ensureMasteryState(){
-  if(!progress.mastery) progress.mastery={};
-  if(!progress.masteryHistory) progress.masteryHistory=[];
+  state.mastery=state.mastery||{};
+  state.masteryHistory=state.masteryHistory||[];
 }
 function masteryRec(id){
   ensureMasteryState();
-  if(!progress.mastery[id]) progress.mastery[id]={stage:'diagnostic',wrong:0,correctIndependent:0,lastWrongAt:0,lastCorrectAt:0,nextReviewAt:0};
-  return progress.mastery[id];
+  if(!state.mastery[id]) state.mastery[id]={stage:'diagnostic',wrong:0,correctIndependent:0,lastWrongAt:0,lastCorrectAt:0,nextReviewAt:0,lastVariant:null};
+  return state.mastery[id];
 }
 function masteryLabel(stage){
   return ({diagnostic:'Діагностика',review:'Повторення теорії',fresh:'Нова аналогічна задача',control:'Контроль без допомоги',mastered:'Засвоєно'})[stage]||stage;
 }
 function updateMasteryBox(id){
   const box=document.getElementById('masteryBox'); if(!box)return;
-  const r=masteryRec(id);
+  const r=masteryRec(id), due=r.nextReviewAt&&Date.now()>=r.nextReviewAt;
   box.style.display='block';
-  const due=r.nextReviewAt && Date.now()>=r.nextReviewAt;
-  box.innerHTML=`<b>Цикл засвоєння: ${masteryLabel(r.stage)}</b>
-  <div class="mastery-row">
-    <span class="mastery-chip ${r.wrong?'warn':'ok'}">помилок: ${r.wrong}</span>
-    <span class="mastery-chip ok">самостійних правильних: ${r.correctIndependent}</span>
-    ${r.nextReviewAt?`<span class="mastery-chip ${due?'warn':''}">${due?'час повторити':'повторення заплановано'}</span>`:''}
-  </div>
-  <div class="muted" style="margin-top:7px">${r.stage==='review'?'Повернись до пояснення потрібної навички. Потім виконай іншу задачу самостійно.':r.stage==='fresh'?'Виправлення старої відповіді ще не означає засвоєння. Потрібна нова аналогічна задача.':r.stage==='control'?'Тепер контрольна задача без підказки розв’язку.':r.stage==='mastered'?'Навичка підтверджена. Система поверне її на інтервальне повторення.':'Спробуй задачу самостійно. Помилка використовується для вибору матеріалу на повторення.'}</div>`;
+  box.innerHTML=`<b>Цикл засвоєння: ${masteryLabel(r.stage)}</b><div class="mastery-row"><span class="mastery-chip ${r.wrong?'warn':'ok'}">помилок: ${r.wrong}</span><span class="mastery-chip ok">самостійних правильних: ${r.correctIndependent}</span>${r.nextReviewAt?`<span class="mastery-chip ${due?'warn':''}">${due?'час повторити':'повторення заплановано'}</span>`:''}</div><div class="muted" style="margin-top:7px">${r.stage==='review'?'Повтори потрібний матеріал. Потім виправ відповідь самостійно.':r.stage==='fresh'?'Після помилки потрібна інша аналогічна задача — виправлення старої ще не означає засвоєння.':r.stage==='control'?'Наступна нова задача перевіряє навичку без допомоги.':r.stage==='mastered'?'Навичка підтверджена. Вона повернеться на інтервальне повторення.':'Спробуй задачу самостійно.'}</div>`;
 }
-function recordMasteryAttempt(id,wasCorrect,variantIndex){
-  const r=masteryRec(id), now=Date.now();
-  if(!wasCorrect){
-    r.wrong++; r.lastWrongAt=now; r.stage='review';
-    r.correctIndependent=0;
-    r.nextReviewAt=now+24*60*60*1000;
-  }else{
-    // Correct after a wrong answer is treated as recovery, not mastery.
-    if(r.stage==='review'){ r.stage='fresh'; }
-    else if(r.stage==='fresh'){ r.correctIndependent=1; r.stage='control'; }
-    else if(r.stage==='control'){ r.correctIndependent=2; r.stage='mastered'; r.lastCorrectAt=now; r.nextReviewAt=now+3*24*60*60*1000; }
-    else if(r.stage==='diagnostic'){ r.correctIndependent=Math.max(1,r.correctIndependent); r.stage='control'; }
-    else if(r.stage==='mastered'){ r.lastCorrectAt=now; r.nextReviewAt=now+7*24*60*60*1000; }
+function recordMasteryAttempt(id,ok,variant,isNewVariant){
+  const r=masteryRec(id), now=Date.now(), variantKey=String(variant);
+  if(!ok){
+    r.wrong++; r.lastWrongAt=now; r.stage='review'; r.correctIndependent=0; r.nextReviewAt=now+86400000;
+  }else if(r.stage==='review'){
+    r.stage='fresh';
+  }else if(isNewVariant && r.lastVariant!==variantKey){
+    r.lastVariant=variantKey; r.lastCorrectAt=now;
+    if(r.stage==='fresh'){r.correctIndependent=1;r.stage='control';}
+    else if(r.stage==='control'){r.correctIndependent=Math.max(2,r.correctIndependent+1);r.stage='mastered';r.nextReviewAt=now+3*86400000;}
+    else if(r.stage==='diagnostic'){r.correctIndependent=Math.max(1,r.correctIndependent);r.stage='control';}
+    else if(r.stage==='mastered'){r.nextReviewAt=now+7*86400000;}
   }
-  progress.masteryHistory.push({id,ok:!!wasCorrect,variant:variantIndex,at:now,stage:r.stage});
-  if(progress.masteryHistory.length>500)progress.masteryHistory=progress.masteryHistory.slice(-500);
-  try{save()}catch(e){try{localStorage.setItem('stem7_v2',JSON.stringify(progress))}catch(_){}}
-  updateMasteryBox(id);
+  state.masteryHistory.push({id,ok:!!ok,variant,at:now,stage:r.stage});
+  if(state.masteryHistory.length>500)state.masteryHistory=state.masteryHistory.slice(-500);
+  save(); updateMasteryBox(id);
 }
-function resetProgress(){
-  if(!confirm('Скинути ВЕСЬ прогрес навчання? Будуть видалені виконані задачі, помилки, слабкі місця, маршрут і дані засвоєння. Цю дію не можна скасувати.'))return;
-  if(!confirm('Підтверди ще раз: почати курс повністю з нуля?'))return;
-  try{
-    localStorage.removeItem('stem7_v2');
-    // remove only app-related legacy keys, if present
-    Object.keys(localStorage).filter(k=>/^stem7_/i.test(k)).forEach(k=>localStorage.removeItem(k));
-  }catch(e){}
-  location.reload();
-}
-
-const _v14_checkAnswer = checkAnswer;
-checkAnswer = function(btn){
-  const lesson = (typeof currentLesson!=='undefined' && currentLesson) ? currentLesson : (typeof state!=='undefined' && state.currentLesson ? findLesson(state.currentLesson) : null);
-  const id = lesson && lesson.id ? lesson.id : ((typeof state!=='undefined'&&state.lastLesson)||null);
-  const beforeWrong = id && progress.errors ? (progress.errors[id]||0) : 0;
-  const beforeDone = id ? taskDoneCount(id) : 0;
-  const out = _v14_checkAnswer.apply(this,arguments);
-  if(id){
-    const afterWrong = progress.errors ? (progress.errors[id]||0) : 0;
-    const afterDone = taskDoneCount(id);
-    const ok = afterDone>beforeDone || afterWrong===beforeWrong;
-    recordMasteryAttempt(id,ok,(typeof state!=='undefined'&&state.variants)?state.variants[id]:null);
-  }
+const _mastery_checkAnswer=checkAnswer;
+checkAnswer=function(btn,id,ans){
+  const l=lessons.find(x=>x.id===id), t=l?taskFor(l):null;
+  const beforeWrong=l?(state.errors[l.skill]||0):0;
+  const beforeDone=taskDoneCount(id);
+  const variant=t?t.idx:null;
+  const out=_mastery_checkAnswer.apply(this,arguments);
+  const afterWrong=l?(state.errors[l.skill]||0):beforeWrong;
+  const afterDone=taskDoneCount(id);
+  const ok=afterWrong===beforeWrong;
+  recordMasteryAttempt(id,ok,variant,afterDone>beforeDone);
   return out;
 };
-const _v14_openLesson = openLesson;
-openLesson = function(id){
-  const out=_v14_openLesson.apply(this,arguments);
+const _mastery_openLesson=openLesson;
+openLesson=function(id){
+  const out=_mastery_openLesson.apply(this,arguments);
   setTimeout(()=>updateMasteryBox(id),0);
   return out;
 };
