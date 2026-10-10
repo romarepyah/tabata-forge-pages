@@ -1,0 +1,46 @@
+/* Shared UI primitives. Each topic supplies its own content, model, checks and application. */
+const RB = Object.create(null);
+function rbTopic(id,topic){RB[id]=topic}
+function rbN(n){return Number(n.toFixed(3)).toLocaleString('uk-UA')}
+function rbSvg(content,label="Навчальна схема"){return `<svg viewBox="0 0 480 280" role="img" aria-label="${s7Esc(label)}">${content}</svg>`}
+function rbLine(x1,y1,x2,y2,color='#3156d3',dash=false){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="3" ${dash?'stroke-dasharray="6 5"':''}/>`}
+function rbText(x,y,t,color='#142033'){return `<text x="${x}" y="${y}" fill="${color}" font-size="16" text-anchor="middle">${s7Esc(t)}</text>`}
+function rbRect(x,y,w,h,t,color='#dce8ff'){return `<rect x="${x}" y="${y}" width="${Math.max(0,w)}" height="${Math.max(0,h)}" fill="${color}" stroke="#3156d3"/>${rbText(x+w/2,y+h/2+5,t)}`}
+function rbSlider(name,label,min,max,value,step=1){return {name,label,min,max,value,step}}
+function rbRead(topic){return Object.fromEntries(topic.controls.map(c=>[c.name,Number(document.getElementById('rb-'+c.name)?.value??c.value)]))}
+function rbNumber(raw){const s=String(raw).trim().replace(/−/g,'-').replace(',','.');return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(s)&&Number.isFinite(Number(s))?Number(s):null}
+function rbState(id){state.topicLearning=state.topicLearning||{};return state.topicLearning[id]||(state.topicLearning[id]={practice:{},test:{},mission:{},errors:{}})}
+function rbLegacyProgress(id){
+ const old={
+  'alg-coordinate':()=>state.coordLearning?[`побудованих точок: ${state.coordLearning.step||0}`,state.coordLearning.self?'самостійну роботу виконано':'',state.coordLearning.exam?'тест виконано':'']:[],
+  'geo-angle':()=>state.angleLearning?[`задач: ${state.angleLearning.step||0}`,state.angleLearning.testScore!=null?`результат тесту: ${state.angleLearning.testScore}`:'']:[],
+  'geo-triangle':()=>state.triangleLearning?[`задач: ${state.triangleLearning.practice||0}`,`кроків STEM: ${state.triangleLearning.stem||0}`]:[],
+  'geo-parallel':()=>state.parallelLearning?[`кроків STEM: ${[1,2,3].filter(n=>state.parallelLearning['stem'+n]).length}`]:[],
+  'phy-measure':()=>state.measureLearning?[`кроків STEM: ${[1,2,3].filter(n=>state.measureLearning['stem'+n]).length}`]:[]
+ };const parts=old[id]?.().filter(Boolean)||[];
+ return parts.length?`<p class="session-note">Збережено з попередньої версії: ${parts.map(s7Esc).join('; ')}. Нові вправи доповнюють цей результат.</p>`:'';
+}
+function rbField(key,label,kind,index,id){return `<label for="${key}">${label}</label><div class="answer-row"><input id="${key}" inputmode="decimal" autocomplete="off"><button type="button" class="secondary minus-btn" onclick="insertMinus(this)" aria-label="Змінити знак числа">−</button><button type="button" data-rb-check="${kind}" data-index="${index}" data-topic="${id}">Перевірити</button></div><p id="${key}-fb" aria-live="polite"></p>`}
+function rbPracticeHTML(l){const bank=practiceBanks[l.id]||[l.q],done=(state.completedVariants[l.id]||[]).map(String);return `<section class="rb-block"><h2>Практика: застосуй правила</h2><p>Вводь число у вказаних одиницях. Кожна задача перевіряє окрему дію; старі виконані задачі позначено.</p>${bank.map((q,i)=>`<div class="q"><h3>Задача ${i+1}</h3><p>${s7Esc(q.text)}</p>${rbField('rb-p'+i,'Відповідь','practice',i,l.id)}<p class="small">${done.includes(String(i))?'✓ Раніше виконано':''}</p></div>`).join('')}</section>`}
+function rbTestsHTML(l,t){return `<section class="rb-block"><h2>Перевір розуміння</h2><p>Обери всі правильні твердження. Пояснення стосується змісту відповіді, а не тільки числа.</p>${t.quiz.map((q,i)=>`<fieldset class="q"><legend>${s7Esc(q.q)}</legend>${q.options.map((o,j)=>`<label class="rb-choice"><input type="checkbox" name="rb-q${i}" value="${j}"> ${s7Esc(o)}</label>`).join('')}<button type="button" data-rb-quiz="${i}" data-topic="${l.id}">Перевірити вибір</button><p id="rb-q${i}-fb" aria-live="polite"></p></fieldset>`).join('')}</section>`}
+function rbMissionHTML(l,t){const r=rbState(l.id);return `<section class="rb-block rb-mission"><h2>${t.mission.title}</h2><p>${t.mission.story}</p>${t.mission.steps.map((q,i)=>`<div class="q" id="rb-m${i}-stage" ${i>0&&!r.mission[i-1]?'hidden':''}><p><b>Крок ${i+1}.</b> ${q.q}</p>${rbField('rb-m'+i,q.unit,'mission',i,l.id)}${r.mission[i]?'<p>✓ Цей крок уже виконано</p>':''}</div>`).join('')}</section>`}
+function rebuiltLesson(l){const t=RB[l.id];const blocks={
+ theory:`<section class="rb-block"><h2>${t.heading}</h2>${t.text}<div class="coord-fact">${t.rule}</div></section>`,
+ model:`<section class="rb-block"><h2>${t.modelTitle}</h2><p>${t.prompt}</p><div class="rb-controls">${t.controls.map(c=>`<label for="rb-${c.name}">${c.label}: <output id="rb-${c.name}-value">${rbN(c.value)}</output><input type="range" id="rb-${c.name}" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.value}" data-rb-model="${l.id}"></label>`).join('')}</div><div class="rb-model" id="rb-model">${t.draw(Object.fromEntries(t.controls.map(c=>[c.name,c.value]))).svg}</div><p id="rb-observation" aria-live="polite">${t.draw(Object.fromEntries(t.controls.map(c=>[c.name,c.value]))).note}</p><div class="q"><p>${t.check.q}</p>${rbField('rb-explore',t.check.unit,'explore',0,l.id)}</div></section>`,
+ examples:`<section class="rb-block"><h2>Розібрані приклади</h2>${t.examples.map(e=>`<div class="worked-example">${e}</div>`).join('')}</section>`,practice:rbPracticeHTML(l),test:rbTestsHTML(l,t),mission:rbMissionHTML(l,t),
+ video:`<section class="rb-block"><h2>Продовжити у ВШО</h2><p>${t.videoLabel}. <a href="${t.video}" target="_blank" rel="noopener noreferrer">Відкрити офіційний ресурс ↗</a></p><p class="small">На платформі може знадобитися вхід. Наші пояснення та вправи працюють без мережі після першого завантаження.</p></section>`};
+ return `<section class="card lesson active rb-lesson" data-rebuilt="${l.id}"><div class="toc-tag">${subjectNames[l.s]} · ${l.skill}</div><h1>${l.title}</h1><p class="rb-lead">${t.goal}</p>${rbLegacyProgress(l.id)}${(t.order||['theory','model','examples','practice','test','mission','video']).map(k=>blocks[k]).join('')}<div class="lesson-nav"><button type="button" class="secondary" onclick="showHome()">На головну</button><button type="button" onclick="nextLesson('${l.id}')">Наступна тема</button></div></section>`;
+}
+function rbRecord(id,kind,index,ok){const r=rbState(id),l=lessons.find(x=>x.id===id);if(kind==='practice'){
+ const bank=practiceBanks[id]||[l.q];state.attempts++;if(ok){state.correct++;state.completedVariants[id]=state.completedVariants[id]||[];const done=state.completedVariants[id];const fresh=!done.map(String).includes(String(index));if(fresh){done.push(String(index));state.independentWins[l.skill]=(state.independentWins[l.skill]||0)+1;recordMasteryAttempt(id,true,index,true)}r.practice[index]=true;state.skills[l.skill]=Math.max(state.skills[l.skill]||0,Math.round(new Set(done.map(String)).size/bank.length*100));}else{recordMasteryAttempt(id,false,index,false);state.errors[l.skill]=(state.errors[l.skill]||0)+1;}scheduleReview(l.skill,ok);state.history.push({id,ok,variant:index,t:Date.now(),type:'practice'});
+ }else if(kind==='mission'){if(ok)r.mission[index]=true;}
+ else if(kind==='test'){r.test[index]=ok;if(!ok){state.errors[l.skill]=(state.errors[l.skill]||0)+1;scheduleReview(l.skill,false)}}
+ r.errors[kind+index]=ok?0:(r.errors[kind+index]||0)+1;persistState();
+}
+document.addEventListener('input',e=>{const id=e.target.dataset.rbModel;if(!id)return;const t=RB[id];document.getElementById(e.target.id+'-value').textContent=rbN(Number(e.target.value));const result=t.draw(rbRead(t));document.getElementById('rb-model').innerHTML=result.svg;document.getElementById('rb-observation').textContent=result.note});
+document.addEventListener('click',e=>{const btn=e.target.closest('[data-rb-check],[data-rb-quiz]');if(!btn)return;const id=btn.dataset.topic,t=RB[id];if(btn.dataset.rbQuiz!==undefined){const i=Number(btn.dataset.rbQuiz),q=t.quiz[i],chosen=[...document.querySelectorAll('input[name="rb-q'+i+'"]:checked')].map(x=>Number(x.value));const ok=chosen.length===q.correct.length&&chosen.every(x=>q.correct.includes(x));const fb=document.getElementById('rb-q'+i+'-fb');fb.textContent=(ok?'✓ Правильно. ':'↩ Перевір вибір. ')+q.why;fb.className=ok?'rb-ok':'rb-bad';rbRecord(id,'test',i,ok);return}
+ const kind=btn.dataset.rbCheck,i=Number(btn.dataset.index),key=kind==='explore'?'rb-explore':kind==='practice'?'rb-p'+i:'rb-m'+i,inp=document.getElementById(key),fb=document.getElementById(key+'-fb'),v=rbNumber(inp.value);
+ if(v===null){fb.textContent='Введи число. Кома й крапка підходять; одиницю в полі писати не потрібно.';fb.className='rb-bad';return}
+ const l=lessons.find(x=>x.id===id),q=kind==='practice'?(practiceBanks[id]||[l.q])[i]:kind==='mission'?t.mission.steps[i]:t.check,ans=kind==='explore'?q.answer(rbRead(t)):q.ans,ok=Math.abs(v-ans)<=Math.max(1e-8,Math.abs(ans)*1e-5);
+ fb.textContent=ok?'✓ Правильно. '+(q.why||q.explain||'Перевірка виконана.'):'↩ '+(q.hint||q.error||q.why);fb.className=ok?'rb-ok':'rb-bad';rbRecord(id,kind,i,ok);if(kind==='mission'&&ok){const next=document.getElementById('rb-m'+(i+1)+'-stage');if(next)next.hidden=false}
+});
