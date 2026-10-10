@@ -9,3 +9,4 @@
  body>header .head .actions button{width:auto;min-width:0;min-height:42px;font-size:11px;padding:6px}
  body>header .head .actions .header-reset{white-space:normal!important;font-size:11px!important;padding:6px!important;min-height:42px!important}
 }
+.rb-block select{max-width:100%;min-width:0;padding:12px;font-size:16px;border:1px solid #c8d0dc;border-radius:10px;background:#fff;color:#142033}.rb-block .answer-row{flex-wrap:wrap}.rb-block [data-ns-pick]{min-height:48px;white-space:normal}.rb-lesson{min-width:0}.rb-model text{font-family:system-ui,sans-serif}
