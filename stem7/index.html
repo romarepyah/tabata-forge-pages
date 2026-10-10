@@ -60,7 +60,7 @@
 }
 </style>
 <meta name="theme-color" content="#3156d3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="STEM 7"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon.svg"></head><body><header><div class="head"><div class="brand"><b>STEM 7 · повний маршрут</b><div class="small">Алгебра × Геометрія × Фізика · персональний навчальний маршрут</div></div><div class="actions"><button class="secondary" onclick="showHome()">Головна</button><button class="secondary" onclick="toggleParent()">Батьківський режим</button><button class="secondary" onclick="openTodayPlan()">План на сьогодні</button><button class="secondary" onclick="openYearPath()">Маршрут</button><button class="header-reset" onclick="resetProgress()">↺ Скинути прогрес</button></div></div></header><main>
-<section id="home"><div class="grid"><div class="card span8"><span class="pill">ПРОДОВЖИТИ</span><h2 id="continueName">Почнімо навчання</h2><div class="bar"><i id="overallBar" style="width:0%"></i></div><p class="small" id="overallText"></p><button onclick="continueLearning()">Продовжити</button></div><div class="card span4"><span class="pill">СЬОГОДНІ</span><h3>Розумне повторення</h3><p id="reviewCount">Немає тем для повторення.</p><div id="reviewQueue" class="review-queue"></div><div class="actions"><button class="ghost" onclick="openReviewMenu()">Меню повторення</button><button class="ghost" onclick="openWeakest()">Слабке місце</button></div></div><div class="card span12"><h2>Три предмети — одна система</h2><div class="subject-grid"><div class="subject"><b>Алгебра</b><p class="small">Поглиблений курс: вирази, степені, одночлени, многочлени, множення й розкладання, рівняння, функції, графіки та системи рівнянь.</p><div class="bar"><i id="algBar"></i></div><p id="algPct"></p><button class="ghost" onclick="openFirst('alg')">Вчитися</button></div><div class="subject"><b>Геометрія</b><p class="small">Поглиблений курс: кути, паралельні прямі, трикутники, ознаки рівності, коло та геометричні побудови — з окремим поясненням кожного типу задачі.</p><div class="bar"><i id="geoBar"></i></div><p id="geoPct"></p><button class="ghost" onclick="openFirst('geo')">Вчитися</button></div><div class="subject"><b>Фізика</b><p class="small">Поглиблений курс: вимірювання, рух, графіки, сили, густина, тиск, робота й потужність — по 6 різних типів задач із власним поясненням.</p><div class="bar"><i id="phyBar"></i></div><p id="phyPct"></p><button class="ghost" onclick="openFirst('phy')">Вчитися</button></div></div></div><div class="card span12"><span class="pill">КАРТА РОКУ</span><h2>Навчальний маршрут</h2><div class="map" id="yearMap"></div></div><div class="card span12"><span class="pill">STEM-МІСІЇ</span><h2>Застосовуємо все разом</h2><p>Після базових тем відкриваються задачі, де потрібно одночасно використати алгебру, геометрію та фізику.</p><div class="actions">
+<section id="home"><div class="grid"><div class="card span8"><span class="pill">ПРОДОВЖИТИ</span><h2 id="continueName">Почнімо навчання</h2><div class="bar"><i id="overallBar" style="width:0%"></i></div><p class="small" id="overallText"></p><button id="continueBtn" type="button">Продовжити</button></div><div class="card span4"><span class="pill">СЬОГОДНІ</span><h3>Розумне повторення</h3><p id="reviewCount">Немає тем для повторення.</p><div id="reviewQueue" class="review-queue"></div><div class="actions"><button class="ghost" onclick="openReviewMenu()">Меню повторення</button><button class="ghost" onclick="openWeakest()">Слабке місце</button></div></div><div class="card span12"><h2>Три предмети — одна система</h2><div class="subject-grid"><div class="subject"><b>Алгебра</b><p class="small">Поглиблений курс: вирази, степені, одночлени, многочлени, множення й розкладання, рівняння, функції, графіки та системи рівнянь.</p><div class="bar"><i id="algBar"></i></div><p id="algPct"></p><button class="ghost subject-learn" type="button" data-subject="alg">Вчитися</button></div><div class="subject"><b>Геометрія</b><p class="small">Поглиблений курс: кути, паралельні прямі, трикутники, ознаки рівності, коло та геометричні побудови — з окремим поясненням кожного типу задачі.</p><div class="bar"><i id="geoBar"></i></div><p id="geoPct"></p><button class="ghost subject-learn" type="button" data-subject="geo">Вчитися</button></div><div class="subject"><b>Фізика</b><p class="small">Поглиблений курс: вимірювання, рух, графіки, сили, густина, тиск, робота й потужність — по 6 різних типів задач із власним поясненням.</p><div class="bar"><i id="phyBar"></i></div><p id="phyPct"></p><button class="ghost subject-learn" type="button" data-subject="phy">Вчитися</button></div></div></div><div class="card span12"><span class="pill">КАРТА РОКУ</span><h2>Навчальний маршрут</h2><div class="map" id="yearMap"></div></div><div class="card span12"><span class="pill">STEM-МІСІЇ</span><h2>Застосовуємо все разом</h2><p>Після базових тем відкриваються задачі, де потрібно одночасно використати алгебру, геометрію та фізику.</p><div class="actions">
 <button onclick="openLesson('stem-route')">Маршрут велосипедиста</button>
 <button onclick="openLesson('stem-bridge')">Міст і масштаб</button>
 <button onclick="openLesson('stem-lab')">Мінілабораторія густини</button>
@@ -98,6 +98,29 @@
 const home=document.getElementById('home'), course=document.getElementById('course'), parent=document.getElementById('parent');
 const lessonArea=document.getElementById('lessonArea'), moduleList=document.getElementById('moduleList');
 const $=id=>document.getElementById(id);
+function directOpenLesson(id){
+  const l=lessons.find(x=>x.id===id); if(!l)return;
+  state.last=id; persistState();
+  home.classList.add('hidden'); parent.classList.remove('show');
+  document.querySelectorAll('.view').forEach(v=>v.style.display='none');
+  course.classList.remove('hidden');
+  lessonArea.innerHTML=lessonHTML(l);
+  if(id==='alg-coordinate')coordRender();
+  if(id==='geo-angle')angleRender();
+  if(id==='geo-parallel')parallelDraw();
+  if(id==='phy-measure')measureDraw();
+  moduleList.innerHTML='<div class="mobile-topic"><label>Тема</label><select id="mobileLessonSelect">'+lessons.map(x=>'<option value="'+x.id+'" '+(x.id===id?'selected':'')+'>'+subjectNames[x.s]+' · '+x.title+'</option>').join('')+'</select></div><div class="desktop-modules">'+lessons.map(x=>'<button type="button" class="module-btn '+(x.id===id?'active':'')+'" data-lesson="'+x.id+'"><span class="toc-tag">'+subjectNames[x.s]+'</span><br>'+x.title+'</button>').join('')+'</div>';
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',function(e){
+  const b=e.target.closest('#continueBtn,.subject-learn,[data-lesson]');
+  if(!b)return;
+  e.preventDefault();
+  if(b.id==='continueBtn') return directOpenLesson((state&&state.last)||'phy-motion');
+  if(b.classList.contains('subject-learn')){const l=lessons.find(x=>x.s===b.dataset.subject);if(l)return directOpenLesson(l.id)}
+  if(b.dataset.lesson)return directOpenLesson(b.dataset.lesson);
+});
+document.addEventListener('change',function(e){if(e.target.id==='mobileLessonSelect')directOpenLesson(e.target.value)});
 
 const lessons=[
 {id:'alg-expr',s:'alg',title:'Числові та буквені вирази',skill:'Вирази',theory:'Буквений вираз описує правило обчислення. Значення виразу залежить від значень змінних.',formula:'2a + 3b',visual:'balance',q:{text:'Обчисли 2a + 3b, якщо a = 4, b = 5.',ans:23,error:'Перевір порядок дій і підстановку значень a та b.',review:'Підстановка значень у буквений вираз.'}},
