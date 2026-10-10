@@ -26,6 +26,7 @@ These checks validate saved answers and interaction behavior. They do not
 replace human review of lesson quality or assert playback of authenticated
 VSHO videos. Source verification is described in `../LESSON-SOURCES.md`.
 
-## Biology and chemistry, cache v24
+## Biology and chemistry, cache v25
 
 `node stem7/tests/natural.browser.cjs` checks all 25 added topics, 150 practice tasks, 50 conceptual questions, 50 mission steps, all activities, legacy progress and offline loading. `node stem7/tests/natural.visual.cjs` checks SVG text bounds and captures topic-specific diagrams. Both use the same Playwright environment variables as the original runner. The original runner continues to test the 50 mathematics, geometry, physics and STEM topics separately.
+Offline first-visit navigation with a query string is covered by `node stem7/tests/offline-query.cjs`; cache v25 supplies the cached index for uncached navigation URLs.
