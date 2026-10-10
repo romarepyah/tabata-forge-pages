@@ -108,7 +108,8 @@ function directOpenLesson(id){
   if(id==='alg-coordinate')coordRender();
   if(id==='geo-angle')angleRender();
   if(id==='geo-parallel')parallelDraw();
-  if(id==='phy-measure')measureDraw();if(id==='geo-triangle')triangleRender();
+  if(id==='phy-measure')measureDraw();
+  if(id==='geo-triangle')triangleRender();if(id==='geo-triangle')triangleRender();
   moduleList.innerHTML='<div class="mobile-topic"><label>Тема</label><select id="mobileLessonSelect">'+lessons.map(x=>'<option value="'+x.id+'" '+(x.id===id?'selected':'')+'>'+subjectNames[x.s]+' · '+x.title+'</option>').join('')+'</select></div><div class="desktop-modules">'+lessons.map(x=>'<button type="button" class="module-btn '+(x.id===id?'active':'')+'" data-lesson="'+x.id+'"><span class="toc-tag">'+subjectNames[x.s]+'</span><br>'+x.title+'</button>').join('')+'</div>';
   window.scrollTo(0,0);
 }
