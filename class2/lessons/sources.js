@@ -1,0 +1,3 @@
+const C2_PROGRAM='https://mon.gov.ua/static-objects/mon/sites/1/zagalna%20serednya/programy-1-4-klas/2022/08/15/Typova.osvitnya.prohrama.1-4/Typova.osvitnya.prohrama.1-2.Savchenko.pdf';
+for(const m of modules){const t=C2[m.id];t.source=(t.source||'Матеріали доповнюють заняття за програмою 1–2 класів. Це набір тематичних вправ, а не повний підручник на навчальний рік.')+' '+(['digital','health'].includes(m.s)?'Цифрові навички та здоров’я подано окремими напрямами для зручності; у школі їх можуть вивчати в інтегрованих курсах.':'');}
+C2['w-safe'].source+=' <a href="https://bezpeka.dsns.gov.ua/materials/minna-bezpeka-dlya-ditey-i-doroslykh" target="_blank" rel="noopener">Матеріали ДСНС про мінну безпеку</a>.';
